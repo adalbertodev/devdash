@@ -1,21 +1,24 @@
 // import { config } from "../../devdash_config";
-import { githubApiResponses } from "../../github_api_response";
+import { InMemoryGitHubRepositoryRepository } from "../../infrastructure/InMemoryGitHubRepositoryRepository";
 import styles from "./Dashboard.module.scss";
-import { ReactComponent as Brand } from "./svgs/brand.svg";
-import { ReactComponent as Check } from "./svgs/check.svg";
-import { ReactComponent as Error } from "./svgs/error.svg";
-import { ReactComponent as PullRequests } from "./svgs/git-pull-request.svg";
-import { ReactComponent as IssueOpened } from "./svgs/issue-opened.svg";
-import { ReactComponent as Lock } from "./svgs/lock.svg";
-import { ReactComponent as Forks } from "./svgs/repo-forked.svg";
-import { ReactComponent as Start } from "./svgs/star.svg";
-import { ReactComponent as Unlock } from "./svgs/unlock.svg";
-import { ReactComponent as Watchers } from "./svgs/watchers.svg";
+import {
+	Brand,
+	Check,
+	Error,
+	Forks,
+	IssueOpened,
+	Lock,
+	PullRequests,
+	Start,
+	Unlock,
+	Watchers,
+} from "./svgs";
 
 const isoToReadableDate = (lastUpdate: string): string => {
 	const lastUpdateDate = new Date(lastUpdate);
 	const currentDate = new Date();
-	const diffDays = Math.abs(currentDate.getDate() - lastUpdateDate.getDate());
+	const diffTime = currentDate.getTime() - lastUpdateDate.getTime();
+	const diffDays = Math.round(diffTime / (1000 * 3600 * 24));
 
 	return diffDays === 0
 		? "today"
@@ -24,9 +27,12 @@ const isoToReadableDate = (lastUpdate: string): string => {
 		: `${diffDays} days ago`;
 };
 
-export const Dashboard = () => {
-	const title = "DevDash";
+const title = "DevDash";
 
+const repository = new InMemoryGitHubRepositoryRepository();
+const repositories = repository.search();
+
+export const Dashboard = () => {
 	return (
 		<>
 			<header className={styles.header}>
@@ -37,7 +43,7 @@ export const Dashboard = () => {
 			</header>
 
 			<section className={styles.container}>
-				{githubApiResponses.map((widget) => (
+				{repositories.map((widget) => (
 					<article key={widget.repositoryData.id} className={styles.widget}>
 						<header className={styles.widget__header}>
 							<a
