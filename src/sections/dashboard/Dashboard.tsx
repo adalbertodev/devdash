@@ -1,3 +1,5 @@
 export const Dashboard = () => {
-	return <div>Dashboard</div>;
+	const title = "DevDash";
+
+	return <div>{title}</div>;
 };
