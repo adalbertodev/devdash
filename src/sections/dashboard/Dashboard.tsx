@@ -1,4 +1,3 @@
-// import { config } from "../../devdash_config";
 import { InMemoryGitHubRepositoryRepository } from "../../infrastructure/InMemoryGitHubRepositoryRepository";
 import styles from "./Dashboard.module.scss";
 import {
@@ -20,11 +19,15 @@ const isoToReadableDate = (lastUpdate: string): string => {
 	const diffTime = currentDate.getTime() - lastUpdateDate.getTime();
 	const diffDays = Math.round(diffTime / (1000 * 3600 * 24));
 
-	return diffDays === 0
-		? "today"
-		: diffDays > 30
-		? "more than a month ago"
-		: `${diffDays} days ago`;
+	if (diffDays === 0) {
+		return "today";
+	}
+
+	if (diffDays > 30) {
+		return "more than a month ago";
+	}
+
+	return `${diffDays} days ago`;
 };
 
 const title = "DevDash";

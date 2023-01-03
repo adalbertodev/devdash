@@ -52,7 +52,15 @@
 					"testing-library/prefer-screen-queries": 0
 				}
 			}
-		]
+		],
+		"rules": {
+			"prettier/prettier": [
+				"error",
+				{
+					"endOfLine": "auto"
+				}
+			]
+		}
 	},
 	"browserslist": {
 		"production": [
