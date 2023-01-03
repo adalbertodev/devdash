@@ -122,7 +122,7 @@ interface Repo {
 	size: number;
 	stargazers_count: number;
 	watchers_count: number;
-	language?: string;
+	language?: string | null;
 	has_issues: boolean;
 	has_projects: boolean;
 	has_downloads: boolean;
@@ -133,7 +133,7 @@ interface Repo {
 	archived: boolean;
 	disabled: boolean;
 	open_issues_count: number;
-	license: License;
+	license: License | null;
 	allow_forking: boolean;
 	is_template: boolean;
 	web_commit_signoff_required: boolean;
@@ -222,7 +222,7 @@ interface Repo2 {
 	archived: boolean;
 	disabled: boolean;
 	open_issues_count: number;
-	license: License;
+	license: License | null;
 	allow_forking: boolean;
 	is_template: boolean;
 	web_commit_signoff_required: boolean;
@@ -398,7 +398,7 @@ export interface RepositoryData {
 	archived: boolean;
 	disabled: boolean;
 	open_issues_count: number;
-	license: License;
+	license: License | null;
 	allow_forking: boolean;
 	is_template: boolean;
 	web_commit_signoff_required: boolean;
@@ -433,7 +433,7 @@ export interface PullRequest {
 	updated_at: string;
 	closed_at?: any;
 	merged_at?: any;
-	merge_commit_sha?: string;
+	merge_commit_sha?: string | null;
 	assignee?: any;
 	assignees: any[];
 	requested_reviewers: any[];
@@ -461,6 +461,6 @@ export interface CiStatus {
 
 export interface GithubApiResponse {
 	repositoryData: RepositoryData;
-	pullRequests: PullRequest[];
-	ciStatus: CiStatus;
+	pullRequest: PullRequest[];
+	CiStatus: CiStatus;
 }

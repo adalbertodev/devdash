@@ -43,10 +43,10 @@ export class GithubApiGithubRepositoryRepository {
 
 		return Promise.all(repositoryRequests)
 			.then((responses) => Promise.all(responses.map((response) => response.json())))
-			.then(([repositoryData, pullRequests, ciStatus]) => ({
+			.then(([repositoryData, pullRequest, CiStatus]) => ({
 				repositoryData: repositoryData as RepositoryData,
-				pullRequests: pullRequests as PullRequest[],
-				ciStatus: ciStatus as CiStatus,
+				pullRequest: pullRequest as PullRequest[],
+				CiStatus: CiStatus as CiStatus,
 			}));
 	}
 }
