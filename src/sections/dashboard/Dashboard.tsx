@@ -1,4 +1,7 @@
-import { InMemoryGitHubRepositoryRepository } from "../../infrastructure/InMemoryGitHubRepositoryRepository";
+import { useEffect, useState } from "react";
+
+import { config } from "../../devdash_config";
+import { GithubApiGithubRepositoryRepository, GithubApiResponse } from "../../infrastructure";
 import styles from "./Dashboard.module.scss";
 import {
 	Brand,
@@ -32,10 +35,20 @@ const isoToReadableDate = (lastUpdate: string): string => {
 
 const title = "DevDash";
 
-const repository = new InMemoryGitHubRepositoryRepository();
-const repositories = repository.search();
+const repository = new GithubApiGithubRepositoryRepository(config.github_access_token);
 
 export const Dashboard = () => {
+	const [githubApiResponses, setGithubApiResponses] = useState<GithubApiResponse[]>([]);
+
+	useEffect(() => {
+		repository
+			.search(config.widgets.map((widget) => widget.repository_url))
+			.then((responses) => {
+				setGithubApiResponses(responses);
+			})
+			.catch((error) => console.error(error));
+	}, []);
+
 	return (
 		<>
 			<header className={styles.header}>
@@ -46,7 +59,7 @@ export const Dashboard = () => {
 			</header>
 
 			<section className={styles.container}>
-				{repositories.map((widget) => (
+				{githubApiResponses.map((widget) => (
 					<article key={widget.repositoryData.id} className={styles.widget}>
 						<header className={styles.widget__header}>
 							<a
@@ -64,9 +77,9 @@ export const Dashboard = () => {
 						<div className={styles.widget__body}>
 							<div className={styles.widget__status}>
 								<p>Last update {isoToReadableDate(widget.repositoryData.updated_at)}</p>
-								{widget.CiStatus.workflow_runs.length > 0 && (
+								{widget.ciStatus.workflow_runs.length > 0 && (
 									<div>
-										{widget.CiStatus.workflow_runs[0].status === "completed" ? (
+										{widget.ciStatus.workflow_runs[0].status === "completed" ? (
 											<Check />
 										) : (
 											<Error />
@@ -97,7 +110,7 @@ export const Dashboard = () => {
 							</div>
 							<div className={styles.widget__stat}>
 								<PullRequests />
-								<span>{widget.pullRequest.length}</span>
+								<span>{widget.pullRequests.length}</span>
 							</div>
 						</footer>
 					</article>

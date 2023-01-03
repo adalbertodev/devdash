@@ -1,4 +1,4 @@
-import { CiStatus, GitHubApiResponse, PullRequest, RepositoryData } from "./GithubApiResponse";
+import { CiStatus, GithubApiResponse, PullRequest, RepositoryData } from "./GithubApiResponse";
 
 interface RepositoryId {
 	organization: string;
@@ -14,7 +14,7 @@ export class GithubApiGithubRepositoryRepository {
 
 	constructor(private readonly personalAccessToken: string) {}
 
-	public async search(repositoryUrls: string[]): Promise<GitHubApiResponse[]> {
+	public async search(repositoryUrls: string[]): Promise<GithubApiResponse[]> {
 		const responsePromises = repositoryUrls
 			.map((url) => this.urlToId(url))
 			.map((id) => this.searchById(id));
@@ -31,7 +31,7 @@ export class GithubApiGithubRepositoryRepository {
 		};
 	}
 
-	private async searchById(repositoryId: RepositoryId): Promise<GitHubApiResponse> {
+	private async searchById(repositoryId: RepositoryId): Promise<GithubApiResponse> {
 		const repositoryRequests = this.endpoints
 			.map((endpoint) => endpoint.replace("$organization", repositoryId.organization))
 			.map((endpoint) => endpoint.replace("$name", repositoryId.name))
