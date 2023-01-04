@@ -1,24 +1,19 @@
 import { render, screen } from "@testing-library/react";
+import { mock } from "jest-mock-extended";
 
-import { GitHubApiGithubRepositoryRepository } from "../src/infrastructure/GitHubApiGitHubRepositoryRepository";
+import { GithubRepositoryRepository } from "../src/domain/GithubRepositoryRepository";
 import { Dashboard } from "../src/sections/dashboard/Dashboard";
 import { GitHubRepositoryMother } from "./GitHubRepositoryMother";
 
-jest.mock("../src/infrastructure/GitHubApiGitHubRepositoryRepository");
-const mockRepository =
-	GitHubApiGithubRepositoryRepository as jest.Mock<GitHubApiGithubRepositoryRepository>;
+const mockRepository = mock<GithubRepositoryRepository>();
 
 describe("Dashboard section", () => {
 	it("show all widgets", async () => {
 		const gitHubRepository = GitHubRepositoryMother.create();
 
-		mockRepository.mockImplementationOnce(() => {
-			return {
-				search: () => Promise.resolve([gitHubRepository]),
-			} as unknown as GitHubApiGithubRepositoryRepository;
-		});
+		mockRepository.search.mockResolvedValue([gitHubRepository]);
 
-		render(<Dashboard />);
+		render(<Dashboard repository={mockRepository} />);
 
 		const title = await screen.findByRole("heading", {
 			name: new RegExp("DevDash", "i"),
@@ -34,13 +29,9 @@ describe("Dashboard section", () => {
 	});
 
 	it("show not results message when there are no widgets", async () => {
-		mockRepository.mockImplementationOnce(() => {
-			return {
-				search: () => Promise.resolve([]),
-			} as unknown as GitHubApiGithubRepositoryRepository;
-		});
+		mockRepository.search.mockResolvedValue([]);
 
-		render(<Dashboard />);
+		render(<Dashboard repository={mockRepository} />);
 
 		const noResults = await screen.findByText(new RegExp("No hay widgets configurados", "i"));
 
@@ -50,13 +41,9 @@ describe("Dashboard section", () => {
 	it("show last modified date in human readable format", async () => {
 		const gitHubRepository = GitHubRepositoryMother.create({ updatedAt: new Date() });
 
-		mockRepository.mockImplementationOnce(() => {
-			return {
-				search: () => Promise.resolve([gitHubRepository]),
-			} as unknown as GitHubApiGithubRepositoryRepository;
-		});
+		mockRepository.search.mockResolvedValue([gitHubRepository]);
 
-		render(<Dashboard />);
+		render(<Dashboard repository={mockRepository} />);
 
 		const modificationDate = await screen.findByText(new RegExp("today", "i"));
 

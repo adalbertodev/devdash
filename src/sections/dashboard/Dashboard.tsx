@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { config } from "../../devdash_config";
-import { GitHubRepository } from "../../domain";
-import { GitHubApiGithubRepositoryRepository } from "../../infrastructure";
+import { GitHubRepository, GithubRepositoryRepository } from "../../domain";
 import styles from "./Dashboard.module.scss";
 import {
 	Brand,
@@ -35,11 +34,11 @@ const isoToReadableDate = (lastUpdateDate: Date): string => {
 
 const title = "DevDash";
 
-export const Dashboard = () => {
-	const repository = useMemo(
-		() => new GitHubApiGithubRepositoryRepository(config.github_access_token),
-		[]
-	);
+interface Props {
+	repository: GithubRepositoryRepository;
+}
+
+export const Dashboard: FC<Props> = ({ repository }) => {
 	const [repositoryData, setrepositoryData] = useState<GitHubRepository[]>([]);
 
 	// eslint-disable-next-line no-console
