@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 
-import { GitHubRepository } from "../src/domain/GitHubRepository";
 import { GitHubApiGithubRepositoryRepository } from "../src/infrastructure/GitHubApiGitHubRepositoryRepository";
 import { Dashboard } from "../src/sections/dashboard/Dashboard";
+import { GitHubRepositoryMother } from "./GitHubRepositoryMother";
 
 jest.mock("../src/infrastructure/GitHubApiGitHubRepositoryRepository");
 const mockRepository =
@@ -10,23 +10,7 @@ const mockRepository =
 
 describe("Dashboard section", () => {
 	it("show all widgets", async () => {
-		const gitHubRepository: GitHubRepository = {
-			id: {
-				organization: "CodelyTv",
-				name: "dotly",
-			},
-			description: "🌚 Modular and easy to customize dotfiles framework",
-			url: "https://github.com/CodelyTV/dotly",
-			private: true,
-			forks: 132,
-			hasWorkflows: true,
-			isLastWorkflowSuccess: false,
-			stars: 4000,
-			issues: 12,
-			pullRequests: 1,
-			updatedAt: new Date(),
-			watchers: 134,
-		};
+		const gitHubRepository = GitHubRepositoryMother.create();
 
 		mockRepository.mockImplementationOnce(() => {
 			return {
@@ -64,23 +48,7 @@ describe("Dashboard section", () => {
 	});
 
 	it("show last modified date in human readable format", async () => {
-		const gitHubRepository: GitHubRepository = {
-			id: {
-				organization: "CodelyTv",
-				name: "dotly",
-			},
-			description: "🌚 Modular and easy to customize dotfiles framework",
-			url: "https://github.com/CodelyTV/dotly",
-			private: true,
-			forks: 132,
-			hasWorkflows: true,
-			isLastWorkflowSuccess: false,
-			stars: 4000,
-			issues: 12,
-			pullRequests: 1,
-			updatedAt: new Date(),
-			watchers: 134,
-		};
+		const gitHubRepository = GitHubRepositoryMother.create({ updatedAt: new Date() });
 
 		mockRepository.mockImplementationOnce(() => {
 			return {
