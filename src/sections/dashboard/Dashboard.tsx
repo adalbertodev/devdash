@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { config } from "../../devdash_config";
-import { GithubApiGithubRepositoryRepository, GithubApiResponse } from "../../infrastructure";
+import { GitHubRepository } from "../../domain";
+import { GitHubApiGithubRepositoryRepository } from "../../infrastructure";
 import styles from "./Dashboard.module.scss";
 import {
 	Brand,
@@ -16,8 +17,7 @@ import {
 	Watchers,
 } from "./svgs";
 
-const isoToReadableDate = (lastUpdate: string): string => {
-	const lastUpdateDate = new Date(lastUpdate);
+const isoToReadableDate = (lastUpdateDate: Date): string => {
 	const currentDate = new Date();
 	const diffTime = currentDate.getTime() - lastUpdateDate.getTime();
 	const diffDays = Math.round(diffTime / (1000 * 3600 * 24));
@@ -37,16 +37,19 @@ const title = "DevDash";
 
 export const Dashboard = () => {
 	const repository = useMemo(
-		() => new GithubApiGithubRepositoryRepository(config.github_access_token),
+		() => new GitHubApiGithubRepositoryRepository(config.github_access_token),
 		[]
 	);
-	const [repositoryData, setrepositoryData] = useState<GithubApiResponse[]>([]);
+	const [repositoryData, setrepositoryData] = useState<GitHubRepository[]>([]);
+
+	// eslint-disable-next-line no-console
+	console.log(repositoryData);
 
 	useEffect(() => {
 		repository
 			.search(config.widgets.map((widget) => widget.repository_url))
-			.then((responses) => {
-				setrepositoryData(responses);
+			.then((repositoryData) => {
+				setrepositoryData(repositoryData);
 			})
 			.catch((error) => console.error(error));
 	}, [repository]);
@@ -66,58 +69,52 @@ export const Dashboard = () => {
 			) : (
 				<section className={styles.container}>
 					{repositoryData.map((widget) => (
-						<article key={widget.repositoryData.id} className={styles.widget}>
+						<article key={`${widget.id.organization}/${widget.id.name}`} className={styles.widget}>
 							<header className={styles.widget__header}>
 								<h2 className={styles.widget__title}>
 									<a
-										href={widget.repositoryData.html_url}
+										href={widget.url}
 										target="_blank"
-										title={`${widget.repositoryData.organization.login}/${widget.repositoryData.name}`}
+										title={`${widget.id.organization}/${widget.id.name}`}
 										rel="noreferrer"
 									>
-										{widget.repositoryData.organization.login}/{widget.repositoryData.name}
+										{widget.id.organization}/{widget.id.name}
 									</a>
 								</h2>
-								{widget.repositoryData.private ? <Lock /> : <Unlock />}
+								{widget.private ? <Lock /> : <Unlock />}
 							</header>
 
 							<div className={styles.widget__body}>
 								<div className={styles.widget__status}>
-									<p>Last update {isoToReadableDate(widget.repositoryData.updated_at)}</p>
-									{widget.CiStatus.workflow_runs.length > 0 && (
-										<div>
-											{widget.CiStatus.workflow_runs[0].status === "completed" ? (
-												<Check />
-											) : (
-												<Error />
-											)}
-										</div>
+									<p>Last update {isoToReadableDate(widget.updatedAt)}</p>
+									{widget.hasWorkflows && (
+										<div>{widget.isLastWorkflowSuccess ? <Check /> : <Error />}</div>
 									)}
 								</div>
 
-								<p className={styles.widget__description}>{widget.repositoryData.description}</p>
+								<p className={styles.widget__description}>{widget.description}</p>
 							</div>
 
 							<footer className={styles.widget__footer}>
 								<div className={styles.widget__stat}>
 									<Start />
-									<span>{widget.repositoryData.stargazers_count}</span>
+									<span>{widget.stars}</span>
 								</div>
 								<div className={styles.widget__stat}>
 									<Watchers />
-									<span>{widget.repositoryData.watchers_count}</span>
+									<span>{widget.watchers}</span>
 								</div>
 								<div className={styles.widget__stat}>
 									<Forks />
-									<span>{widget.repositoryData.forks_count}</span>
+									<span>{widget.forks}</span>
 								</div>
 								<div className={styles.widget__stat}>
 									<IssueOpened />
-									<span>{widget.repositoryData.open_issues_count}</span>
+									<span>{widget.issues}</span>
 								</div>
 								<div className={styles.widget__stat}>
 									<PullRequests />
-									<span>{widget.pullRequest.length}</span>
+									<span>{widget.pullRequests}</span>
 								</div>
 							</footer>
 						</article>

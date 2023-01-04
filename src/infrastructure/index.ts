@@ -1,3 +1,3 @@
-export * from "./GithubApiGithubRepositoryRepository";
-export * from "./GithubApiResponse";
+export * from "./GitHubApiGitHubRepositoryRepository";
+export * from "./GitHubApiResponse";
 export * from "./InMemoryGitHubRepositoryRepository";

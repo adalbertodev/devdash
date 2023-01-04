@@ -1,7 +1,7 @@
-import { githubApiResponses } from "../github_api_response";
+import { gitHubApiResponses } from "../github_api_response";
 
 export class InMemoryGitHubRepositoryRepository {
-	search(): typeof githubApiResponses {
-		return githubApiResponses;
+	search(): typeof gitHubApiResponses {
+		return gitHubApiResponses;
 	}
 }

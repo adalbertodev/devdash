@@ -459,7 +459,7 @@ export interface CiStatus {
 	workflow_runs: Workflowrun[];
 }
 
-export interface GithubApiResponse {
+export interface GitHubApiResponse {
 	repositoryData: RepositoryData;
 	pullRequest: PullRequest[];
 	CiStatus: CiStatus;
