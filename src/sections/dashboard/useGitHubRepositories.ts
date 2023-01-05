@@ -10,12 +10,14 @@ export const useGitHubRepositories = (
 	repository: GithubRepositoryRepository,
 	repositoriesUrls: string[]
 ): GitHubRepositories => {
-	const [repositoryData, setrepositoryData] = useState<GitHubRepository[]>([]);
+	const [repositoryData, setRepositoryData] = useState<GitHubRepository[]>([]);
 
 	useEffect(() => {
 		repository
 			.search(repositoriesUrls)
-			.then((repositoryData) => setrepositoryData(repositoryData))
+			.then((repositoryData) => {
+				setRepositoryData(repositoryData);
+			})
 			.catch((error) => console.error(error));
 	}, [repository, repositoriesUrls]);
 

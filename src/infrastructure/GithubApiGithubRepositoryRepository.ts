@@ -10,15 +10,17 @@ export class GitHubApiGithubRepositoryRepository implements GithubRepositoryRepo
 
 	constructor(private readonly personalAccessToken: string) {}
 
-	public async search(repositoryUrls: string[]): Promise<GitHubRepository[]> {
-		const responsePromises = repositoryUrls
-			.map((url) => this.urlToId(url))
-			.map((id) => this.searchById(id));
+	async search(repositoryUrls: string[]): Promise<GitHubRepository[]> {
+		const responsePromises = await Promise.all(
+			repositoryUrls.map((url) => this.urlToId(url)).map((id) => this.searchById(id))
+		);
 
-		return Promise.all(responsePromises);
+		return responsePromises.filter(
+			(responsePromise): responsePromise is GitHubRepository => responsePromise !== null
+		);
 	}
 
-	private async searchById(repositoryId: RepositoryId): Promise<GitHubRepository> {
+	async searchById(repositoryId: RepositoryId): Promise<GitHubRepository | null> {
 		const repositoryRequests = this.endpoints
 			.map((endpoint) => endpoint.replace("$organization", repositoryId.organization))
 			.map((endpoint) => endpoint.replace("$name", repositoryId.name))
