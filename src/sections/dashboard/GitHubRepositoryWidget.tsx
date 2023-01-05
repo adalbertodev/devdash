@@ -1,18 +1,10 @@
 import { FC } from "react";
+import { Link } from "react-router-dom";
 
+import { Lock, Unlock } from "../../assets/svgs";
 import { GitHubRepository } from "../../domain";
 import styles from "./GitHubRepositoryWidget.module.scss";
-import {
-	Check,
-	Error,
-	Forks,
-	IssueOpened,
-	Lock,
-	PullRequests,
-	Start,
-	Unlock,
-	Watchers,
-} from "./svgs";
+import { Check, Error, Forks, IssueOpened, PullRequests, Start, Watchers } from "./svgs";
 
 const isoToReadableDate = (lastUpdateDate: Date): string => {
 	const currentDate = new Date();
@@ -39,14 +31,14 @@ export const GitHubRepositoryWidget: FC<Props> = ({ widget }) => {
 		<article key={`${widget.id.organization}/${widget.id.name}`} className={styles.widget}>
 			<header className={styles.widget__header}>
 				<h2 className={styles.widget__title}>
-					<a
-						href={`/repository/${widget.id.organization}/${widget.id.name}`}
+					<Link
+						to={`/repository/${widget.id.organization}/${widget.id.name}`}
 						target="_blank"
 						title={`${widget.id.organization}/${widget.id.name}`}
 						rel="noreferrer"
 					>
 						{widget.id.organization}/{widget.id.name}
-					</a>
+					</Link>
 				</h2>
 				{widget.private ? <Lock /> : <Unlock />}
 			</header>

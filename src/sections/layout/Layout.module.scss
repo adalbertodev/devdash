@@ -2,6 +2,10 @@
 	--header-height: 6.25rem;
 }
 
+a {
+	text-decoration: none;
+}
+
 .header {
 	height: var(--header-height);
 	background-color: #1a2233;

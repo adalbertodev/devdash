@@ -1,21 +1,24 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
+import { ErrorBoundary } from "./ErrorBoundary";
 import styles from "./Layout.module.scss";
-import { Brand } from "./svgs";
 
-const title = "DevDash";
+const title = "DevDash_";
 
 export const Layout = () => {
 	return (
 		<>
 			<header className={styles.header}>
 				<section className={styles.header__container}>
-					<Brand />
-					<h1 className={styles.header__brand}>{title}</h1>
+					<Link to="/">
+						<h1 className={styles.header__brand}>{title}</h1>
+					</Link>
 				</section>
 			</header>
 
-			<Outlet />
+			<ErrorBoundary>
+				<Outlet />
+			</ErrorBoundary>
 		</>
 	);
 };
