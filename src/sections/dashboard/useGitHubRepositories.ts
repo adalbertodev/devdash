@@ -3,25 +3,31 @@ import { useEffect, useState } from "react";
 import { GitHubRepository, GithubRepositoryRepository } from "../../domain";
 
 interface GitHubRepositories {
-	repositories: GitHubRepository[];
+	repositoryData: GitHubRepository[];
+	isLoading: boolean;
 }
 
 export const useGitHubRepositories = (
 	repository: GithubRepositoryRepository,
-	repositoriesUrls: string[]
+	repositoryUrls: string[]
 ): GitHubRepositories => {
 	const [repositoryData, setRepositoryData] = useState<GitHubRepository[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
+		setIsLoading(true);
+
 		repository
-			.search(repositoriesUrls)
+			.search(repositoryUrls)
 			.then((repositoryData) => {
 				setRepositoryData(repositoryData);
+				setIsLoading(false);
 			})
 			.catch((error) => console.error(error));
-	}, [repository, repositoriesUrls]);
+	}, [repository, repositoryUrls]);
 
 	return {
-		repositories: repositoryData,
+		repositoryData,
+		isLoading,
 	};
 };
