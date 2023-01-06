@@ -1,17 +1,19 @@
 import { FC, useEffect, useMemo } from "react";
 
 import { config } from "../../devdash_config";
-import { GithubRepositoryRepository } from "../../domain";
+import { GithubRepositoryRepository, RepositoryWidgetRepository } from "../../domain";
 import styles from "./Dashboard.module.scss";
-import { GitHubRepositoryWidget } from "./GitHubRepositoryWidget";
-import { useGitHubRepositories } from "./useGitHubRepositories";
+import { GitHubRepositoryWidget } from "./gitHubRepositoryWidget/GitHubRepositoryWidget";
+import { useGitHubRepositories } from "./gitHubRepositoryWidget/useGitHubRepositories";
+import { AddWidgetForm } from "./repositoryWidget/AddRepositoryWidgetForm";
 import { WidgetsSkeleton } from "./WidgetsSkeleton";
 
 interface Props {
 	repository: GithubRepositoryRepository;
+	repositoryWidgetRepository: RepositoryWidgetRepository;
 }
 
-export const Dashboard: FC<Props> = ({ repository }) => {
+export const Dashboard: FC<Props> = ({ repository, repositoryWidgetRepository }) => {
 	const gitHubRepositoryUrls = useMemo(
 		() => config.widgets.map((widget) => widget.repository_url),
 		[]
@@ -45,6 +47,8 @@ export const Dashboard: FC<Props> = ({ repository }) => {
 							widget={widget}
 						/>
 					))}
+
+					<AddWidgetForm repository={repositoryWidgetRepository} />
 				</section>
 			)}
 		</>

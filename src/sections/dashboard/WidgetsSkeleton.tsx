@@ -3,7 +3,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { FC } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
-import styles from "./GitHubRepositoryWidget.module.scss";
+import styles from "./gitHubRepositoryWidget/GitHubRepositoryWidget.module.scss";
 import { Forks, IssueOpened, PullRequests, Start, Watchers } from "./svgs";
 
 const WidgetSkeleton = () => {

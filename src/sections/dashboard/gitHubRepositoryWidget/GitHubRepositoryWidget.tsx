@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 
-import { Lock, Unlock } from "../../assets/svgs";
-import { GitHubRepository } from "../../domain";
+import { Lock, Unlock } from "../../../assets/svgs";
+import { GitHubRepository } from "../../../domain";
+import { Check, Error, Forks, IssueOpened, PullRequests, Start, Watchers } from "../svgs";
 import styles from "./GitHubRepositoryWidget.module.scss";
-import { Check, Error, Forks, IssueOpened, PullRequests, Start, Watchers } from "./svgs";
 
 const isoToReadableDate = (lastUpdateDate: Date): string => {
 	const currentDate = new Date();

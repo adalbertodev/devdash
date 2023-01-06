@@ -1,3 +1,4 @@
+export { ReactComponent as Add } from "./add.svg";
 export { ReactComponent as Check } from "./check.svg";
 export { ReactComponent as Error } from "./error.svg";
 export { ReactComponent as PullRequests } from "./git-pull-request.svg";

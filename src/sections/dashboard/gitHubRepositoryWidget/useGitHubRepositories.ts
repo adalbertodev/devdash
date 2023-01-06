@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { GitHubRepository, GithubRepositoryRepository } from "../../domain";
+import { GitHubRepository, GithubRepositoryRepository } from "../../../domain";
 
 interface GitHubRepositories {
 	repositoryData: GitHubRepository[];

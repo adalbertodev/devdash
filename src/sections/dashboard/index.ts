@@ -1,4 +1,4 @@
 export * from "./Dashboard";
-export * from "./GitHubRepositoryWidget";
+export * from "./gitHubRepositoryWidget";
+export * from "./gitHubRepositoryWidget";
 export * from "./svgs";
-export * from "./useGitHubRepositories";
