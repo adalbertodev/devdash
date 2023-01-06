@@ -33,7 +33,6 @@ export const GitHubRepositoryWidget: FC<Props> = ({ widget }) => {
 				<h2 className={styles.widget__title}>
 					<Link
 						to={`/repository/${widget.id.organization}/${widget.id.name}`}
-						target="_blank"
 						title={`${widget.id.organization}/${widget.id.name}`}
 						rel="noreferrer"
 					>
