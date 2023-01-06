@@ -16,18 +16,25 @@ export const TopBarProgressByLocation = () => {
 
 	useEffect(() => {
 		setPreviousLocation(location.pathname);
-		setProgress(true);
-
-		const hasClickedOnALinkToTheCurrentPage = location.pathname === previousLocation;
-		if (hasClickedOnALinkToTheCurrentPage) {
-			setPreviousLocation("");
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [location]);
+	}, [location.pathname]);
 
 	useEffect(() => {
-		setProgress(false);
-	}, [previousLocation]);
+		if (previousLocation !== location.pathname) {
+			setProgress(true);
+		}
+	}, [location.pathname, previousLocation]);
+
+	useEffect(() => {
+		const disableTopBar = () => {
+			setProgress(false);
+		};
+
+		document.addEventListener("pageLoaded", disableTopBar);
+
+		return () => {
+			document.removeEventListener("pageLoaded", disableTopBar);
+		};
+	}, []);
 
 	if (!progress) {
 		return <></>;

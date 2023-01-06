@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC, useEffect, useMemo } from "react";
 
 import { config } from "../../devdash_config";
 import { GithubRepositoryRepository } from "../../domain";
@@ -18,6 +18,12 @@ export const Dashboard: FC<Props> = ({ repository }) => {
 	);
 
 	const { repositoryData, isLoading } = useGitHubRepositories(repository, gitHubRepositoryUrls);
+
+	useEffect(() => {
+		if (!isLoading) {
+			document.dispatchEvent(new CustomEvent("pageLoaded"));
+		}
+	}, [isLoading]);
 
 	return (
 		<>
