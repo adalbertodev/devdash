@@ -49,12 +49,12 @@
 			height: 1.5rem;
 		}
 
-		div:has(input[type="submit"]) {
+		div:has(button[type="submit"]) {
 			display: flex;
 			justify-content: flex-end;
 		}
 
-		input[type="submit"] {
+		button[type="submit"] {
 			padding: 0.5rem 1rem;
 			color: #1a2233;
 			font-size: 1rem;
@@ -64,7 +64,7 @@
 
 			&:hover {
 				cursor: pointer;
-				transform: scale(1.05);
+				transform: scale(1.025);
 			}
 		}
 	}
