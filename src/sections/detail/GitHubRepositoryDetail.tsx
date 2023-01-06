@@ -1,5 +1,5 @@
 import { FC, useMemo } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 import { Lock, Unlock } from "../../assets/svgs";
 import { GithubRepositoryRepository } from "../../domain";
@@ -27,11 +27,11 @@ export const GitHubRepositoryDetail: FC<Props> = ({ repository }) => {
 	return (
 		<section className={styles["repository-detail"]}>
 			<header className={styles.header}>
-				<Link to={repositoryData.url} target="_blank" rel="noreferrer">
+				<a href={repositoryData.url} target="_blank" rel="noreferrer">
 					<h2 className={styles.header__title}>
 						{repositoryData.id.organization}/{repositoryData.id.name}
 					</h2>
-				</Link>
+				</a>
 				{repositoryData.private ? <Lock /> : <Unlock />}
 			</header>
 
