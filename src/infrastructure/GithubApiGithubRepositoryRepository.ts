@@ -1,7 +1,7 @@
-import { GitHubRepository, GithubRepositoryRepository, RepositoryId } from "../domain";
+import { GitHubRepository, GitHubRepositoryRepository, RepositoryId } from "../domain";
 import { CiStatus, PullRequest, RepositoryData } from "./GitHubApiResponse";
 
-export class GitHubApiGithubRepositoryRepository implements GithubRepositoryRepository {
+export class GitHubApiGithubRepositoryRepository implements GitHubRepositoryRepository {
 	private readonly endpoints = [
 		"https://api.github.com/repos/$organization/$name",
 		"https://api.github.com/repos/$organization/$name/pulls",

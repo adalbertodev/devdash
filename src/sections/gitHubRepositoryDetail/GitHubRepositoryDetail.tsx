@@ -2,26 +2,30 @@ import { FC, useEffect, useMemo } from "react";
 import { Navigate, useParams } from "react-router-dom";
 
 import { Lock, Unlock } from "../../assets/svgs";
-import { GitHubRepositoryPullRequestRepository, GithubRepositoryRepository } from "../../domain";
+import { GitHubRepositoryPullRequestRepository, GitHubRepositoryRepository } from "../../domain";
 import { useInViewport } from "../layout/useInViewport";
 import styles from "./GitHubRepositoryDetail.module.scss";
 import { PullRequests } from "./PullRequests";
 import { useGitHubRepository } from "./useGitHubRepository";
 
 interface Props {
-	repository: GithubRepositoryRepository;
+	gitHubRepositoryRepository: GitHubRepositoryRepository;
 	gitHubRepositoryPullRequestRepository: GitHubRepositoryPullRequestRepository;
 }
 
 export const GitHubRepositoryDetail: FC<Props> = ({
-	repository,
+	gitHubRepositoryRepository,
 	gitHubRepositoryPullRequestRepository,
 }) => {
 	const { isInViewport, ref } = useInViewport();
 	const { organization, name } = useParams() as { organization: string; name: string };
+
 	const repositoryId = useMemo(() => ({ organization, name }), [organization, name]);
 
-	const { repositoryData, isLoading } = useGitHubRepository(repository, repositoryId);
+	const { repository: repositoryData, isLoading } = useGitHubRepository(
+		gitHubRepositoryRepository,
+		repositoryId
+	);
 
 	useEffect(() => {
 		if (!isLoading) {

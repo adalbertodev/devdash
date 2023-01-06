@@ -3,10 +3,10 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { FC } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
-import styles from "./gitHubRepositoryWidget/GitHubRepositoryWidget.module.scss";
-import { Forks, IssueOpened, PullRequests, Start, Watchers } from "./svgs";
+import { Forks, IssueOpened, PullRequests, Start, Watchers } from "../../../assets/svgs";
+import styles from "./RepositoryWidget.module.scss";
 
-const WidgetSkeleton = () => {
+const RepositoryWidgetSkeleton = () => {
 	return (
 		<article className={styles.widget}>
 			<header
@@ -63,11 +63,11 @@ interface Props {
 	numberOfWidgets: number;
 }
 
-export const WidgetsSkeleton: FC<Props> = ({ numberOfWidgets }) => {
+export const RepositoryWidgetsSkeleton: FC<Props> = ({ numberOfWidgets }) => {
 	return (
 		<SkeletonTheme baseColor="#1A2233" highlightColor="#535966">
 			{[...new Array<number[]>(numberOfWidgets)].map((_, i) => (
-				<WidgetSkeleton key={`WidgetSkeletor_${i}`} />
+				<RepositoryWidgetSkeleton key={`WidgetSkeletor_${i}`} />
 			))}
 		</SkeletonTheme>
 	);

@@ -20,6 +20,7 @@ export const useGitHubRepositoryPullRequests = (
 
 	useEffect(() => {
 		setIsLoading(true);
+
 		repository
 			.search(repositoryId)
 			.then((pullRequests) => {

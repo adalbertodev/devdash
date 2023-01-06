@@ -1,8 +1,8 @@
 import React, { FC, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import { Add } from "../../../assets/svgs";
 import { RepositoryWidgetRepository } from "../../../domain";
-import { Add } from "../svgs";
 import styles from "./AddRepositoryWidgetForm.module.scss";
 import { useAddRepositoryWidget } from "./useAddRepositoryWidget";
 
@@ -18,7 +18,7 @@ interface Props {
 	repository: RepositoryWidgetRepository;
 }
 
-export const AddWidgetForm: FC<Props> = ({ repository }) => {
+export const AddRepositoryWidgetForm: FC<Props> = ({ repository }) => {
 	const [isFormActive, setIsFormActive] = useState(false);
 	const { save } = useAddRepositoryWidget(repository);
 

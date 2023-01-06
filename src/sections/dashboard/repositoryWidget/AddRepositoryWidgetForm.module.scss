@@ -61,6 +61,11 @@
 			background-color: #3cff64;
 			border: 1px solid transparent;
 			border-radius: 2rem;
+
+			&:hover {
+				cursor: pointer;
+				transform: scale(1.05);
+			}
 		}
 	}
 }

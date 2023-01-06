@@ -1,12 +1,13 @@
+import { useMemo } from "react";
 import { Link, Outlet } from "react-router-dom";
 
 import { ErrorBoundary } from "./ErrorBoundary";
 import styles from "./Layout.module.scss";
 import { TopBarProgressByLocation } from "./TopBarProgressByLocation";
 
-const title = "DevDash_";
-
 export const Layout = () => {
+	const title = useMemo(() => "DevDash_", []);
+
 	return (
 		<>
 			<TopBarProgressByLocation />

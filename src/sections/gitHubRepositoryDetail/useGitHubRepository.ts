@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 
-import { GitHubRepository, GithubRepositoryRepository, RepositoryId } from "../../domain";
+import { GitHubRepository, GitHubRepositoryRepository, RepositoryId } from "../../domain";
 
 interface GitHubRepositoryData {
-	repositoryData: GitHubRepository | null | undefined;
+	repository: GitHubRepository | null | undefined;
 	isLoading: boolean;
 }
 
 export const useGitHubRepository = (
-	repository: GithubRepositoryRepository,
+	repository: GitHubRepositoryRepository,
 	repositoryId: RepositoryId
 ): GitHubRepositoryData => {
 	const [repositoryData, setRepositoryData] = useState<GitHubRepository | null | undefined>();
@@ -16,6 +16,7 @@ export const useGitHubRepository = (
 
 	useEffect(() => {
 		setIsLoading(true);
+
 		repository
 			.searchById(repositoryId)
 			.then((repositoryData) => {
@@ -26,7 +27,7 @@ export const useGitHubRepository = (
 	}, [repository, repositoryId]);
 
 	return {
-		repositoryData,
+		repository: repositoryData,
 		isLoading,
 	};
 };
