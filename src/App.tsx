@@ -1,5 +1,10 @@
 import { Router } from "./Router";
+import { RepositoryWidgetContextProvider } from "./sections/dashboard";
 
 export function App() {
-	return <Router />;
+	return (
+		<RepositoryWidgetContextProvider>
+			<Router />
+		</RepositoryWidgetContextProvider>
+	);
 }

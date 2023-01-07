@@ -6,6 +6,7 @@ import { RepositoryWidgetRepository } from "../../../src/domain/RepositoryWidget
 import { Dashboard } from "../../../src/sections/dashboard/Dashboard";
 import { GitHubRepositoryMother } from "../../GitHubRepositoryMother";
 import { renderWithRouter } from "../../renderWithRouter";
+import { RepositoryWidgetMother } from "../../RepositoryWidgetMother";
 
 const mockGitHubRepositoryRepository = mock<GitHubRepositoryRepository>();
 const mockWidgetRepository = mock<RepositoryWidgetRepository>();
@@ -13,11 +14,13 @@ const mockWidgetRepository = mock<RepositoryWidgetRepository>();
 describe("Dashboard section", () => {
 	it("show all widgets", async () => {
 		const gitHubRepository = GitHubRepositoryMother.create();
+		const repositoryWidget = RepositoryWidgetMother.create();
 
 		mockGitHubRepositoryRepository.search.mockResolvedValue([gitHubRepository]);
 
 		renderWithRouter(
 			<Dashboard
+				repositoryWidgets={[repositoryWidget]}
 				gitHubRepositoryRepository={mockGitHubRepositoryRepository}
 				repositoryWidgetRepository={mockWidgetRepository}
 			/>
@@ -36,6 +39,7 @@ describe("Dashboard section", () => {
 
 		renderWithRouter(
 			<Dashboard
+				repositoryWidgets={[]}
 				gitHubRepositoryRepository={mockGitHubRepositoryRepository}
 				repositoryWidgetRepository={mockWidgetRepository}
 			/>
@@ -48,11 +52,13 @@ describe("Dashboard section", () => {
 
 	it("show last modified date in human readable format", async () => {
 		const gitHubRepository = GitHubRepositoryMother.create({ updatedAt: new Date() });
+		const repositoryWidget = RepositoryWidgetMother.create();
 
 		mockGitHubRepositoryRepository.search.mockResolvedValue([gitHubRepository]);
 
 		renderWithRouter(
 			<Dashboard
+				repositoryWidgets={[repositoryWidget]}
 				gitHubRepositoryRepository={mockGitHubRepositoryRepository}
 				repositoryWidgetRepository={mockWidgetRepository}
 			/>

@@ -20,6 +20,7 @@ export class GitHubRepositoryMother {
 			forks: faker.datatype.number(),
 			issues: faker.datatype.number(),
 			pullRequests: faker.datatype.number(),
+			workflowRunsStatus: [],
 			...params,
 		};
 

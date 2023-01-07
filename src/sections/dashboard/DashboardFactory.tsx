@@ -4,19 +4,21 @@ import {
 	LocalStorageRepositoryWidgetRepository,
 } from "../../infrastructure";
 import { Dashboard } from "./Dashboard";
+import { useRepositoryWidgetContext } from "./repositoryWidget";
 
 const gitHubRepositoryRepository = new GitHubApiGithubRepositoryRepository(
 	config.github_access_token
 );
 const repositoryWidgetRepository = new LocalStorageRepositoryWidgetRepository();
 
-export class DashboardFactory {
-	static create(): React.ReactNode {
-		return (
-			<Dashboard
-				gitHubRepositoryRepository={gitHubRepositoryRepository}
-				repositoryWidgetRepository={repositoryWidgetRepository}
-			/>
-		);
-	}
-}
+export const DashboardFactory = () => {
+	const { repositoryWidgets } = useRepositoryWidgetContext();
+
+	return (
+		<Dashboard
+			repositoryWidgets={repositoryWidgets}
+			gitHubRepositoryRepository={gitHubRepositoryRepository}
+			repositoryWidgetRepository={repositoryWidgetRepository}
+		/>
+	);
+};
