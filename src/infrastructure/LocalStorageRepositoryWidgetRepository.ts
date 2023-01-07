@@ -2,7 +2,11 @@ import { RepositoryWidget } from "../domain";
 import { RepositoryWidgetRepository } from "../domain/RepositoryWidgetRepository";
 
 export class LocalStorageRepositoryWidgetRepository implements RepositoryWidgetRepository {
-	async save(widget: RepositoryWidget): Promise<void> {
+	public save = async (widget: RepositoryWidget): Promise<void> => {
 		await Promise.resolve();
-	}
+	};
+
+	public search = (): Promise<RepositoryWidget[]> => {
+		return Promise.resolve([]);
+	};
 }
