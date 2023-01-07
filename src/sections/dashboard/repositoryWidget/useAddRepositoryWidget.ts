@@ -31,6 +31,7 @@ export const useAddRepositoryWidget = (
 		}
 
 		await repository.save(widget);
+		document.dispatchEvent(new CustomEvent("repositoryWidgetAdded"));
 	};
 
 	return { save };

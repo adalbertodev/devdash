@@ -27,6 +27,7 @@ describe("AddRepositoryWidgetForm", () => {
 	});
 
 	it("save new widget when form is submitted", async () => {
+		const dispatchEventSpy = jest.spyOn(document, "dispatchEvent");
 		mockRepository.search.mockResolvedValue([]);
 
 		const newWidget: RepositoryWidget = {
@@ -60,6 +61,9 @@ describe("AddRepositoryWidgetForm", () => {
 				id: expect.stringMatching(new RegExp(newWidget.id, "i")) as string,
 			})
 		);
+
+		expect(dispatchEventSpy).toHaveBeenCalledWith(expect.any(Event));
+		expect(dispatchEventSpy.mock.calls[0][0].type).toBe("repositoryWidgetAdded");
 	});
 
 	it("show error when repository already exist in Dashboard", async () => {
