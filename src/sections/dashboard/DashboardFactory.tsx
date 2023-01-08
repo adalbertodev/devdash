@@ -1,5 +1,5 @@
 import {
-	GitHubApiGitHubRepositoryRepository,
+	oldGitHubApiGitHubRepositoryRepository,
 	LocalStorageGitHubAccessTokenRepository,
 	LocalStorageRepositoryWidgetRepository,
 } from "../../infrastructure";
@@ -9,7 +9,7 @@ import { useRepositoryWidgetContext } from "./repositoryWidget";
 
 const ghAccessTokenRepository = new LocalStorageGitHubAccessTokenRepository();
 const ghAccessTokenSearcher = new GitHubAccessTokenSearcher(ghAccessTokenRepository);
-const gitHubRepositoryRepository = new GitHubApiGitHubRepositoryRepository(
+const gitHubRepositoryRepository = new oldGitHubApiGitHubRepositoryRepository(
 	ghAccessTokenSearcher.search()
 );
 const repositoryWidgetRepository = new LocalStorageRepositoryWidgetRepository();
