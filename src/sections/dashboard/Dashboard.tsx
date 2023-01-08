@@ -1,6 +1,7 @@
 import { FC, useEffect, useMemo } from "react";
 
 import {
+	DomainEvents,
 	GitHubRepositoryRepository,
 	RepositoryWidget,
 	RepositoryWidgetRepository,
@@ -34,7 +35,7 @@ export const Dashboard: FC<Props> = ({
 
 	useEffect(() => {
 		if (!isLoading) {
-			document.dispatchEvent(new CustomEvent("pageLoaded"));
+			document.dispatchEvent(new CustomEvent(DomainEvents.pageLoaded));
 		}
 	}, [isLoading]);
 

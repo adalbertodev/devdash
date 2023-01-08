@@ -3,16 +3,13 @@ import { v4 as uuidv4 } from "uuid";
 
 import { Add } from "../../../assets/svgs";
 import {
+	FormEvent,
 	NotUrlValidError,
 	RepositoryAlreadyExistsError,
 	RepositoryWidgetRepository,
 } from "../../../domain";
 import styles from "./AddRepositoryWidgetForm.module.scss";
 import { useAddRepositoryWidget } from "./useAddRepositoryWidget";
-
-type FormEvent<T> = React.FormEvent<HTMLFormElement> & {
-	target: { elements: { [key in keyof T]: { value: T[key] } } };
-};
 
 type FormFields = {
 	repositoryUrl: string;

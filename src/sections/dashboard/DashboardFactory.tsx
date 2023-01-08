@@ -1,13 +1,16 @@
-import { config } from "../../devdash_config";
 import {
-	GitHubApiGithubRepositoryRepository,
+	GitHubApiGitHubRepositoryRepository,
+	LocalStorageGitHubAccessTokenRepository,
 	LocalStorageRepositoryWidgetRepository,
 } from "../../infrastructure";
+import { GitHubAccessTokenSearcher } from "../config";
 import { Dashboard } from "./Dashboard";
 import { useRepositoryWidgetContext } from "./repositoryWidget";
 
-const gitHubRepositoryRepository = new GitHubApiGithubRepositoryRepository(
-	config.github_access_token
+const ghAccessTokenRepository = new LocalStorageGitHubAccessTokenRepository();
+const ghAccessTokenSearcher = new GitHubAccessTokenSearcher(ghAccessTokenRepository);
+const gitHubRepositoryRepository = new GitHubApiGitHubRepositoryRepository(
+	ghAccessTokenSearcher.search()
 );
 const repositoryWidgetRepository = new LocalStorageRepositoryWidgetRepository();
 

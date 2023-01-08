@@ -69,7 +69,10 @@
 		}
 
 		.error {
-			color: red;
+			padding: 0.25rem;
+			color: black;
+			background-color: #f83d32;
+			border-radius: 0.25rem;
 		}
 	}
 }

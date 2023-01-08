@@ -1,4 +1,5 @@
 import {
+	DomainEvents,
 	NotUrlValidError,
 	RepositoryAlreadyExistsError,
 	RepositoryWidget,
@@ -31,7 +32,7 @@ export const useAddRepositoryWidget = (
 		}
 
 		await repository.save(widget);
-		document.dispatchEvent(new CustomEvent("repositoryWidgetAdded"));
+		document.dispatchEvent(new CustomEvent(DomainEvents.repositoryWidgetAdded));
 	};
 
 	return { save };

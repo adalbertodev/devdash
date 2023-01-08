@@ -1,13 +1,17 @@
 import { createContext, FC, useContext, useEffect, useState } from "react";
 
 import { config } from "../../../devdash_config";
-import { RepositoryWidget, RepositoryWidgetRepository } from "../../../domain";
+import { DomainEvents, RepositoryWidget, RepositoryWidgetRepository } from "../../../domain";
 
 interface ContextProps {
 	repositoryWidgets: RepositoryWidget[];
 }
 
-const RepositoryWidgetContext = createContext<ContextProps>({} as ContextProps);
+const initialState: ContextProps = {
+	repositoryWidgets: [],
+};
+
+const RepositoryWidgetContext = createContext<ContextProps>(initialState);
 
 interface Props {
 	children: React.ReactNode;
@@ -45,10 +49,10 @@ export const RepositoryWidgetContextProvider: FC<Props> = ({ children, repositor
 				.catch((error) => console.error(error));
 		};
 
-		document.addEventListener("repositoryWidgetAdded", reloadRepositoryWidgets);
+		document.addEventListener(DomainEvents.repositoryWidgetAdded, reloadRepositoryWidgets);
 
 		return () => {
-			document.removeEventListener("repositoryWidgetAdded", reloadRepositoryWidgets);
+			document.removeEventListener(DomainEvents.repositoryWidgetAdded, reloadRepositoryWidgets);
 		};
 	}, [repository]);
 
