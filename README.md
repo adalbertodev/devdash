@@ -1,32 +1,13 @@
-<p align="center">
-  <a href="https://codely.com">
-    <img src="https://user-images.githubusercontent.com/10558907/170513882-a09eee57-7765-4ca4-b2dd-3c2e061fdad0.png" width="300px" height="92px" alt="Codely logo"/>
-  </a>
-</p>
+## 🎉 Deployments
 
-<h1 align="center">
-  👋️ Create React App Codely template example
-</h1>
-
-<p align="center">
-    <a href="https://github.com/${YOUR_ORG_SLUG}/${YOUR_REPO_SLUG}/actions/workflows/ci.yml"><img src="https://github.com/${YOUR_ORG_SLUG}/${YOUR_REPO_SLUG}/actions/workflows/ci.yml/badge.svg" alt="Build status"/></a>
-    <a href="https://github.com/CodelyTV"><img src="https://img.shields.io/badge/CodelyTV-OS-green.svg?style=flat-square" alt="Codely Open Source"/></a>
-    <a href="https://pro.codely.com"><img src="https://img.shields.io/badge/CodelyTV-PRO-black.svg?style=flat-square" alt="CodelyTV Courses"/></a>
-</p>
-
-<p align="center">
-  App created with the <a href="https://github.com/CodelyTV/cra-template-codely">🌱⚛️ Create React App Codely template</a> 
-  <br />
-  <br />
-  <a href="https://github.com/${YOUR_ORG_SLUG}/${YOUR_REPO_SLUG}/stargazers">Stars are welcome 😊</a>
-</p>
+- [Vercel](https://personal-devdash.vercel.app)
 
 ## 🚀 Run the app
 
 - `npm install`: Install dependencies
 - `cp .env.example .env`: Create the environment variables file based on the example template
 - `vim .env`: Specify your GitHub Personal access token ([how to get it](https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) -> [your tokens](https://github.com/settings/tokens) -> Enable `Repo.public_repo`)
-- `vim src/devdash_config.ts`: Set the repository URLs you want to show on your *DevDash_*
+- `vim src/devdash_config.ts`: Set the repository URLs you want to show on your \_DevDash\_\_
 - `npm start`: Run in dev mode on [localhost:3000](http://localhost:3000)
 - `npm run build`: Generate production build
 
