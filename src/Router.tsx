@@ -4,11 +4,16 @@ import { ConfigFactory } from "./sections/config";
 import { DashboardFactory } from "./sections/dashboard/DashboardFactory";
 import { GitHubRepositoryDetailFactory } from "./sections/gitHubRepositoryDetail/GitHubRepositoryDetailFactory";
 import { Layout } from "./sections/layout";
+import { RouterMiddleware } from "./sections/router/RouterMiddleware";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <Layout />,
+		element: (
+			<RouterMiddleware>
+				<Layout />
+			</RouterMiddleware>
+		),
 		children: [
 			{
 				path: "/",

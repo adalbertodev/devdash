@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { LocalStorageGitHubAccessTokenRepository } from "../../infrastructure/LocalStorageGithubAccessTokenRepository";
@@ -7,7 +7,11 @@ import { GitHubAccessTokenSearcher } from "../config/GithubAccessTokenSearcher";
 const ghAccessTokenRepository = new LocalStorageGitHubAccessTokenRepository();
 const ghAccessTokenSearcher = new GitHubAccessTokenSearcher(ghAccessTokenRepository);
 
-export function RouterMiddleware({ children }: { children: React.ReactElement }) {
+interface Props {
+	children: React.ReactNode;
+}
+
+export const RouterMiddleware: FC<Props> = ({ children }) => {
 	const navigate = useNavigate();
 
 	const ghAccessToken = ghAccessTokenSearcher.search();
@@ -19,4 +23,4 @@ export function RouterMiddleware({ children }: { children: React.ReactElement })
 	}, [ghAccessToken, navigate]);
 
 	return <>{children}</>;
-}
+};
