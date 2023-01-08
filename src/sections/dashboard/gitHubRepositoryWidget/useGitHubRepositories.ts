@@ -23,7 +23,7 @@ export const useGitHubRepositories = (
 				setGitHubRepositories(repositoryData);
 				setIsLoading(false);
 			})
-			.catch((error) => console.error(error));
+			.catch((error: Error) => console.error(error));
 	}, [repository, repositoryUrls]);
 
 	return {

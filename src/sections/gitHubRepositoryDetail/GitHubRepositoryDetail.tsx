@@ -2,7 +2,11 @@ import { FC, useEffect, useMemo } from "react";
 import { Navigate, useParams } from "react-router-dom";
 
 import { Lock, Unlock } from "../../assets/svgs";
-import { GitHubRepositoryPullRequestRepository, GitHubRepositoryRepository } from "../../domain";
+import {
+	DomainEvents,
+	GitHubRepositoryPullRequestRepository,
+	GitHubRepositoryRepository,
+} from "../../domain";
 import { useInViewport } from "../layout/useInViewport";
 import styles from "./GitHubRepositoryDetail.module.scss";
 import { PullRequests } from "./PullRequests";
@@ -22,38 +26,35 @@ export const GitHubRepositoryDetail: FC<Props> = ({
 
 	const repositoryId = useMemo(() => ({ organization, name }), [organization, name]);
 
-	const { repository: repositoryData, isLoading } = useGitHubRepository(
-		gitHubRepositoryRepository,
-		repositoryId
-	);
+	const { repository, isLoading } = useGitHubRepository(gitHubRepositoryRepository, repositoryId);
 
 	useEffect(() => {
 		if (!isLoading) {
-			document.dispatchEvent(new CustomEvent("pageLoaded"));
+			document.dispatchEvent(new CustomEvent(DomainEvents.pageLoaded));
 		}
 	}, [isLoading]);
 
-	if (repositoryData === undefined) {
+	if (repository === undefined) {
 		return <span>Cargando...</span>;
 	}
 
-	if (repositoryData === null) {
+	if (repository === null) {
 		return <Navigate to="../" />;
 	}
 
 	return (
 		<section className={styles["repository-detail"]}>
 			<header className={styles.header}>
-				<a href={repositoryData.url} target="_blank" rel="noreferrer">
+				<a href={repository.url} target="_blank" rel="noreferrer">
 					<h2 className={styles.header__title}>
-						{repositoryData.id.organization}/{repositoryData.id.name}
+						{repository.id.organization}/{repository.id.name}
 					</h2>
 				</a>
-				{repositoryData.private ? <Lock /> : <Unlock />}
+				{repository.private ? <Lock /> : <Unlock />}
 			</header>
 
 			<p>{3 / 0}</p>
-			<p>{repositoryData.description}</p>
+			<p>{repository.description}</p>
 
 			<h3>Repository stats</h3>
 			<table className={styles.detail__table}>
@@ -69,22 +70,22 @@ export const GitHubRepositoryDetail: FC<Props> = ({
 
 				<tbody>
 					<tr>
-						<td>{repositoryData.stars}</td>
-						<td>{repositoryData.watchers}</td>
-						<td>{repositoryData.forks}</td>
-						<td>{repositoryData.issues}</td>
-						<td>{repositoryData.pullRequests}</td>
+						<td>{repository.stars}</td>
+						<td>{repository.watchers}</td>
+						<td>{repository.forks}</td>
+						<td>{repository.issues}</td>
+						<td>{repository.pullRequests}</td>
 					</tr>
 				</tbody>
 			</table>
 
 			<h3>Workflow runs status</h3>
 
-			{repositoryData.workflowRunsStatus.length > 0 ? (
+			{repository.workflowRunsStatus.length > 0 ? (
 				<>
 					<p>
 						⏱️Last workflow run:{" "}
-						{repositoryData.workflowRunsStatus[0].createdAt.toLocaleDateString("es-ES")}
+						{repository.workflowRunsStatus[0].createdAt.toLocaleDateString("es-ES")}
 					</p>
 					<table className={styles.detail__table}>
 						<thead>
@@ -97,7 +98,7 @@ export const GitHubRepositoryDetail: FC<Props> = ({
 							</tr>
 						</thead>
 						<tbody>
-							{repositoryData.workflowRunsStatus.map((run) => (
+							{repository.workflowRunsStatus.map((run) => (
 								<tr key={run.id}>
 									<td>{run.name}</td>
 									<td>
