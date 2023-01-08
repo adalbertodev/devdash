@@ -1,11 +1,11 @@
 import { config } from "../../devdash_config";
 import {
 	GitHubApiGitHubRepositoryPullRequestRepository,
-	oldGitHubApiGitHubRepositoryRepository,
+	GitHubApiGitHubRepositoryRepository,
 } from "../../infrastructure";
 import { GitHubRepositoryDetail } from "./GitHubRepositoryDetail";
 
-const gitHubRepositoryRepository = new oldGitHubApiGitHubRepositoryRepository(
+const gitHubRepositoryRepository = new GitHubApiGitHubRepositoryRepository(
 	config.github_access_token
 );
 const gitHubRepositoryPullRequestRepository = new GitHubApiGitHubRepositoryPullRequestRepository(
