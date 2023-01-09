@@ -1,37 +1,37 @@
 :root {
-	--header-height: 6.25rem;
+  --header-height: 6.25rem;
 }
 
 svg {
-	fill: #b1b1b1;
+  fill: #b1b1b1;
 }
 
 .header {
-	height: var(--header-height);
-	background-color: #1a2233;
+  height: var(--header-height);
+  background-color: #1a2233;
 
-	&__container {
-		display: flex;
-		gap: 2rem;
-		align-items: center;
-		justify-content: space-between;
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 1rem;
+  &__container {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
 
-		.brand__container {
-			display: flex;
-			gap: 2rem;
-			align-items: center;
-		}
+    .brand__container {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
 
-		& a {
-			text-decoration: none;
-		}
-	}
+    & a {
+      text-decoration: none;
+    }
+  }
 
-	.app__brand {
-		color: #3cff64;
-		font-style: italic;
-	}
+  .app__brand {
+    color: #3cff64;
+    font-style: italic;
+  }
 }
