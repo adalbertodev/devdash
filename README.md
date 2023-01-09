@@ -1,7 +1,3 @@
-## 🎉 Deployments
-
-- <a href="https://personal-devdash.vercel.app" target="_blank">Vercel</a>
-
 ## 🚀 Run the app
 
 - `npm install`: Install dependencies
