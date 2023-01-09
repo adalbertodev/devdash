@@ -1,6 +1,9 @@
 import { RepositoryWidgetMother } from "../../domain/RepositoryWidget/RepositoryWidgetMother";
 
 const setGitHubToken = () => {
+	// eslint-disable-next-line no-console
+	console.log(Cypress.env());
+
 	cy.get("input#ghAccessToken").type(Cypress.env("GITHUB_TOKEN") as string);
 
 	cy.findByRole("button", {
