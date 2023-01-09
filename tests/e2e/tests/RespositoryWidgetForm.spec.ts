@@ -1,4 +1,4 @@
-import { RepositoryWidgetMother } from "../../RepositoryWidgetMother";
+import { RepositoryWidgetMother } from "../../domain/RepositoryWidget/RepositoryWidgetMother";
 
 describe("Repository Widget Form", () => {
 	it("Add new repository with url", () => {

@@ -1,6 +1,6 @@
 import { LocalStorageRepositoryWidgetRepository } from "./infrastructure";
-import { Router } from "./Router";
-import { RepositoryWidgetContextProvider } from "./sections/dashboard";
+import { RepositoryWidgetContextProvider } from "./pages/Dashboard";
+import { Router } from "./pages/Router";
 
 const repository = new LocalStorageRepositoryWidgetRepository();
 
