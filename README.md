@@ -1,7 +1,7 @@
 ## 🚀 Run the app
 
 - `npm install`: Install dependencies
-- Duplicate .env.template and rename to .env
+- Rename .env.template to .env
 - `code .env`: Specify your GitHub Personal access token ([how to get it](https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) -> [your tokens](https://github.com/settings/tokens) -> Enable `Repo.public_repo`)
 - `vim src/devdash_config.ts`: Set the repository URLs you want to show on your DevDash\_\_
 - `npm start`: Run in dev mode on [localhost:3000](http://localhost:3000)
@@ -15,6 +15,7 @@
 
 ### End-to-end tests
 
+- Rename cypress.env.template.json to cypress.env.json
 - `npm start`: Run in dev mode on [localhost:3000](http://localhost:3000)
 - Run end-to-end tests with Cypress choosing one of the following options:
   - `npm run cy:open`: Open Cypress in dev mode

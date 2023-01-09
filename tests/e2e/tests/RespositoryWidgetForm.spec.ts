@@ -1,65 +1,63 @@
 import { RepositoryWidgetMother } from "../../domain/RepositoryWidget/RepositoryWidgetMother";
 
+const setGitHubToken = () => {
+	cy.get("input#ghAccessToken").type(Cypress.env("GITHUB_TOKEN") as string);
+
+	cy.findByRole("button", {
+		name: /Guardar/i,
+	}).click();
+};
+
+const addNewRepositoryWidget = (repositoryUrl: string) => {
+	cy.findByRole("button", {
+		name: /Añadir/i,
+	}).click();
+
+	cy.findByLabelText(/Url del repositorio/i).type(repositoryUrl);
+
+	cy.findByRole("button", {
+		name: /Añadir/i,
+	}).click();
+};
+
 describe("Repository Widget Form", () => {
 	it("Add new repository with url", () => {
-		cy.intercept("https://api.github.com/repos/**").as("getRepos");
-
 		const newWidget = RepositoryWidgetMother.create({
 			repositoryUrl: "https://github.com/CodelyTV/DevDash",
 		});
 
 		cy.visit("/");
 
+		setGitHubToken();
+
+		cy.intercept("https://api.github.com/repos/**").as("getRepos");
+
 		cy.wait("@getRepos").then(() => {
-			cy.findByRole("button", {
-				name: /Añadir/i,
-			}).click();
-
-			cy.findByLabelText(/Url del repositorio/i).type(newWidget.repositoryUrl);
-
-			cy.findByRole("button", {
-				name: /Añadir/i,
-			}).click();
+			addNewRepositoryWidget(newWidget.repositoryUrl);
 
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-			const widget = cy.findByText("CodelyTV/DevDash");
+			const widget = cy.contains("CodelyTV/DevDash");
 
 			widget.should("exist");
 		});
 	});
 
 	it("Show error when repository already exists in Dashboard", () => {
-		cy.intercept("https://api.github.com/repos/**").as("getRepos");
-
 		const newWidget = RepositoryWidgetMother.create({
 			repositoryUrl: "https://github.com/CodelyTV/DevDash",
 		});
 
 		cy.visit("/");
 
+		setGitHubToken();
+
+		cy.intercept("https://api.github.com/repos/**").as("getRepos");
+
 		cy.wait("@getRepos").then(() => {
-			cy.findByRole("button", {
-				name: /Añadir/i,
-			}).click();
+			addNewRepositoryWidget(newWidget.repositoryUrl);
+			addNewRepositoryWidget(newWidget.repositoryUrl);
 
-			cy.findByLabelText(/Url del repositorio/i).type(newWidget.repositoryUrl);
-
-			cy.findByRole("button", {
-				name: /Añadir/i,
-			}).click();
-
-			cy.findByRole("button", {
-				name: /Añadir/i,
-			}).click();
-
-			cy.findByLabelText(/Url del repositorio/i).type(newWidget.repositoryUrl);
-
-			cy.findByRole("button", {
-				name: /Añadir/i,
-			}).click();
-
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-			const errorMessage = cy.findByText("Repositorio duplicado");
+			const errorMessage = cy.contains("Repositorio duplicado");
 
 			errorMessage.should("exist");
 		});

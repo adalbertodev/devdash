@@ -11,7 +11,7 @@ const router = createBrowserRouter([
 		path: "/",
 		element: (
 			<RouterMiddleware>
-				<Layout />
+				<Layout />,
 			</RouterMiddleware>
 		),
 		children: [
