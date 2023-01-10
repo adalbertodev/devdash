@@ -1,5 +1,7 @@
 import { FC, useEffect } from "react";
 
+import { TextField } from "../../components/Input";
+import { SubmitButton } from "../../components/SubmitButton";
 import { DomainEvents } from "../../domain";
 import { FormEvent } from "../../domain/FormEvent";
 import { GitHubAccessTokenRepository } from "../../domain/GitHubAccessToken";
@@ -47,9 +49,11 @@ export const Config: FC<Props> = ({ repository }) => {
 
 			<form className={styles.form} onSubmit={submitForm}>
 				<label htmlFor="ghAccessToken">GitHub Access Token</label>
-				<input id="ghAccessToken" name="ghAccessToken" type="text" />
+				<TextField id="ghAccessToken" name="ghAccessToken" mode="light" />
 
-				<input type="submit" value="Guardar" />
+				<div className={styles.submit_section}>
+					<SubmitButton>Añadir</SubmitButton>
+				</div>
 			</form>
 		</section>
 	);

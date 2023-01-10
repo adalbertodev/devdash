@@ -31,6 +31,27 @@ const isoToReadableDate = (lastUpdateDate: Date): string => {
 	return `${diffDays} days ago`;
 };
 
+const adjustStatNumber = (stat: number): string => {
+	const cutNumbers = new Map<number, string>([
+		[1_000, "k"],
+		[1_000_000, "M"],
+	]);
+
+	let adjustedStat = `${stat}`;
+
+	for (const [cutNumber, suffix] of Array.from(cutNumbers.entries())) {
+		const result = Math.round(stat / cutNumber);
+
+		if (result < 1) {
+			break;
+		}
+
+		adjustedStat = `${result}${suffix}`;
+	}
+
+	return adjustedStat;
+};
+
 interface Props {
 	widget: GitHubRepository;
 }
@@ -59,23 +80,23 @@ export const GitHubRepositoryWidget: FC<Props> = ({ widget }) => {
 			<footer className={styles.widget__footer}>
 				<div className={styles.widget__stat}>
 					<Start />
-					<span>{widget.stars}</span>
+					<span>{adjustStatNumber(widget.stars)}</span>
 				</div>
 				<div className={styles.widget__stat}>
 					<Watchers />
-					<span>{widget.watchers}</span>
+					<span>{adjustStatNumber(widget.watchers)}</span>
 				</div>
 				<div className={styles.widget__stat}>
 					<Forks />
-					<span>{widget.forks}</span>
+					<span>{adjustStatNumber(widget.forks)}</span>
 				</div>
 				<div className={styles.widget__stat}>
 					<IssueOpened />
-					<span>{widget.issues}</span>
+					<span>{adjustStatNumber(widget.issues)}</span>
 				</div>
 				<div className={styles.widget__stat}>
 					<PullRequests />
-					<span>{widget.pullRequests}</span>
+					<span>{adjustStatNumber(widget.pullRequests)}</span>
 				</div>
 			</footer>
 		</article>

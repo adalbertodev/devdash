@@ -1,7 +1,7 @@
 .add_widget {
   min-height: 14.25rem;
   color: white;
-  background-color: #4f5562;
+  background-color: #1a2233;
 
   .container {
     display: flex;
@@ -35,37 +35,16 @@
     padding: 1rem;
 
     label {
+      font-weight: bold;
       display: block;
       margin-bottom: 0.5rem;
       font-size: 1rem;
     }
 
-    div {
-      margin-bottom: 1rem;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      height: 1.5rem;
-    }
-
-    div:has(button[type="submit"]) {
+    .submit_section {
       display: flex;
       justify-content: flex-end;
-    }
-
-    button[type="submit"] {
-      padding: 0.5rem 1rem;
-      color: #1a2233;
-      font-size: 1rem;
-      background-color: #3cff64;
-      border: 1px solid transparent;
-      border-radius: 2rem;
-
-      &:hover {
-        transform: scale(1.025);
-        cursor: pointer;
-      }
+      margin-top: 1rem;
     }
 
     .error {

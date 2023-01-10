@@ -2,6 +2,8 @@ import React, { FC, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { Add } from "../../../../assets/svgs";
+import { TextField } from "../../../../components/Input";
+import { SubmitButton } from "../../../../components/SubmitButton";
 import {
 	FormEvent,
 	NotUrlValidError,
@@ -50,7 +52,7 @@ export const AddRepositoryWidgetForm: FC<Props> = ({ repository }) => {
 					<form className={styles.form} onSubmit={submitForm}>
 						<div>
 							<label htmlFor="repositoryUrl">URL del repositorio</label>
-							<input type="text" name="repositoryUrl" id="repositoryUrl" />
+							<TextField name="repositoryUrl" id="repositoryUrl" />
 						</div>
 
 						{hasAlreadyExistsError && (
@@ -65,8 +67,8 @@ export const AddRepositoryWidgetForm: FC<Props> = ({ repository }) => {
 							</p>
 						)}
 
-						<div>
-							<button type="submit">Añadir</button>
+						<div className={styles.submit_section}>
+							<SubmitButton>Añadir</SubmitButton>
 						</div>
 					</form>
 				)}
