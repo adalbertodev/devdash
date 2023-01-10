@@ -93,11 +93,9 @@ describe("AddRepositoryWidgetForm", () => {
 		});
 		userEvent.click(submitButton);
 
-		const errorMessage = await screen.findByRole("alert", {
-			description: /Repositorio duplicado/i,
-		});
+		const errorMessage = await screen.findByRole("alert");
 
-		expect(errorMessage).toBeInTheDocument();
+		expect(errorMessage.innerHTML).toMatch(/Repositorio duplicado/i);
 		await waitFor(() => expect(mockRepository.save).not.toHaveBeenCalled());
 	});
 
@@ -124,11 +122,9 @@ describe("AddRepositoryWidgetForm", () => {
 		});
 		userEvent.click(submitButton);
 
-		const errorMessage = await screen.findByRole("alert", {
-			description: /URL invalida/i,
-		});
+		const errorMessage = await screen.findByRole("alert");
 
-		expect(errorMessage).toBeInTheDocument();
+		expect(errorMessage.innerHTML).toMatch(/URL inválida/i);
 		await waitFor(() => expect(mockRepository.save).not.toHaveBeenCalled());
 	});
 

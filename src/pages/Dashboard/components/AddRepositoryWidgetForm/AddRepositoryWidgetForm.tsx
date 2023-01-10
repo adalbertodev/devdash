@@ -23,8 +23,7 @@ interface Props {
 
 export const AddRepositoryWidgetForm: FC<Props> = ({ repository }) => {
 	const [isFormActive, setIsFormActive] = useState(false);
-	const [hasAlreadyExistsError, setHasAlreadyExistsError] = useState(false);
-	const [hasUrlError, setHasUrlError] = useState(false);
+	const [error, setError] = useState("");
 	const { save } = useAddRepositoryWidget(repository);
 
 	const submitForm = async (event: FormEvent<FormFields>): Promise<void> => {
@@ -33,8 +32,13 @@ export const AddRepositoryWidgetForm: FC<Props> = ({ repository }) => {
 		const { repositoryUrl } = event.target.elements;
 		const error = await save({ id: uuidv4().toString(), repositoryUrl: repositoryUrl.value });
 
-		setHasAlreadyExistsError(error instanceof RepositoryAlreadyExistsError);
-		setHasUrlError(error instanceof NotUrlValidError);
+		const errorMessage =
+			error instanceof RepositoryAlreadyExistsError
+				? "Repositorio duplicado"
+				: error instanceof NotUrlValidError
+				? "URL inválida"
+				: "";
+		setError(errorMessage);
 
 		setIsFormActive(false);
 	};
@@ -42,7 +46,7 @@ export const AddRepositoryWidgetForm: FC<Props> = ({ repository }) => {
 	return (
 		<article className={styles.add_widget}>
 			<div className={styles.container}>
-				{!isFormActive && !hasAlreadyExistsError && !hasUrlError ? (
+				{!isFormActive && error === "" ? (
 					<button onClick={() => setIsFormActive(true)} className={styles.add_button}>
 						<Add />
 						<p>Añadir repositorio</p>
@@ -52,20 +56,8 @@ export const AddRepositoryWidgetForm: FC<Props> = ({ repository }) => {
 					<form className={styles.form} onSubmit={submitForm}>
 						<div>
 							<label htmlFor="repositoryUrl">URL del repositorio</label>
-							<TextField name="repositoryUrl" id="repositoryUrl" />
+							<TextField name="repositoryUrl" id="repositoryUrl" error={error} />
 						</div>
-
-						{hasAlreadyExistsError && (
-							<p className={styles.error} role="alert" aria-describedby="duplicated-error">
-								<span id="duplicated-error">Repositorio duplicado</span>
-							</p>
-						)}
-
-						{hasUrlError && (
-							<p className={styles.error} role="alert" aria-describedby="url-error">
-								<span id="url-error">URL invalida</span>
-							</p>
-						)}
 
 						<div className={styles.submit_section}>
 							<SubmitButton>Añadir</SubmitButton>

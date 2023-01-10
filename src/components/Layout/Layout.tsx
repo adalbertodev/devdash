@@ -19,7 +19,7 @@ export const Layout = () => {
 						</Link>
 					</div>
 
-					<Link to="/config">
+					<Link to="/config" className={styles.config_button}>
 						<span>⚙️</span>
 					</Link>
 				</section>

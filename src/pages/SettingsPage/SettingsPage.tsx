@@ -52,7 +52,7 @@ export const Config: FC<Props> = ({ repository }) => {
 				<TextField id="ghAccessToken" name="ghAccessToken" mode="light" />
 
 				<div className={styles.submit_section}>
-					<SubmitButton>Añadir</SubmitButton>
+					<SubmitButton>Guardar</SubmitButton>
 				</div>
 			</form>
 		</section>
