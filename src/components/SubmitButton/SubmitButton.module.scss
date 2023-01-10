@@ -1,11 +1,11 @@
 .submit-button {
-  background-color: #3cff64;
-  border-radius: 2rem;
-  border: 1px solid transparent;
-  color: #1a2233;
-  font-size: 1rem;
-  font-weight: bold;
   padding: 0.5rem 1rem;
+  color: #1a2233;
+  font-weight: bold;
+  font-size: 1rem;
+  background-color: #3cff64;
+  border: 1px solid transparent;
+  border-radius: 2rem;
 
   &:hover {
     background-color: #35e259;

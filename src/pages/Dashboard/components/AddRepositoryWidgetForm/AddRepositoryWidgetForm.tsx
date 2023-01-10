@@ -1,7 +1,8 @@
-import React, { FC, useState } from "react";
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { FC, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { Add } from "../../../../assets/svgs";
+import { Add, BackArrow } from "../../../../assets/svgs";
 import { TextField } from "../../../../components/Input";
 import { SubmitButton } from "../../../../components/SubmitButton";
 import {
@@ -52,17 +53,22 @@ export const AddRepositoryWidgetForm: FC<Props> = ({ repository }) => {
 						<p>Añadir repositorio</p>
 					</button>
 				) : (
-					// eslint-disable-next-line @typescript-eslint/no-misused-promises
-					<form className={styles.form} onSubmit={submitForm}>
-						<div>
-							<label htmlFor="repositoryUrl">URL del repositorio</label>
-							<TextField name="repositoryUrl" id="repositoryUrl" error={error} />
-						</div>
+					<>
+						<button className={styles.back_button} onClick={() => setIsFormActive(false)}>
+							<BackArrow />
+						</button>
 
-						<div className={styles.submit_section}>
-							<SubmitButton>Añadir</SubmitButton>
-						</div>
-					</form>
+						<form className={styles.form} onSubmit={submitForm}>
+							<div>
+								<label htmlFor="repositoryUrl">URL del repositorio</label>
+								<TextField name="repositoryUrl" id="repositoryUrl" error={error} />
+							</div>
+
+							<div className={styles.submit_section}>
+								<SubmitButton>Añadir</SubmitButton>
+							</div>
+						</form>
+					</>
 				)}
 			</div>
 		</article>
