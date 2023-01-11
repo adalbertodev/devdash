@@ -60,7 +60,12 @@ export const AddRepositoryWidgetForm: FC<Props> = ({ repository }) => {
 						<form className={styles.form} onSubmit={submitForm}>
 							<div>
 								<label htmlFor="repositoryUrl">URL del repositorio</label>
-								<TextField name="repositoryUrl" id="repositoryUrl" error={error} />
+								<TextField
+									name="repositoryUrl"
+									id="repositoryUrl"
+									placeholder="https://github.com/user/repository"
+									error={error}
+								/>
 							</div>
 
 							<div className={styles.submit_section}>

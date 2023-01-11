@@ -11,6 +11,7 @@ interface Props {
 	name?: string;
 	onChange?: React.ChangeEventHandler<HTMLInputElement>;
 	value?: string;
+	placeholder?: string;
 }
 
 export const TextField: FC<Props> = ({ children, className, mode = "dark", error, ...props }) => {

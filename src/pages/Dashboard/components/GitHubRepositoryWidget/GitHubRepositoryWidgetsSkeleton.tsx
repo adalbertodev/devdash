@@ -3,7 +3,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { FC } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
-import { Forks, IssueOpened, PullRequests, Start, Watchers } from "../../../../assets/svgs";
+import { Forks, IssueOpened, PullRequests, Star, Watchers } from "../../../../assets/svgs";
 import styles from "./GitHubRepositoryWidget.module.scss";
 
 const RepositoryWidgetSkeleton = () => {
@@ -25,7 +25,7 @@ const RepositoryWidgetSkeleton = () => {
 			</div>
 			<footer className={styles.widget__footer}>
 				<div className={styles.widget__stat}>
-					<Start />
+					<Star />
 					<span>
 						<Skeleton width={35} />
 					</span>

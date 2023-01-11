@@ -1,7 +1,17 @@
 import { FC, useEffect, useMemo } from "react";
 import { Navigate, useParams } from "react-router-dom";
 
-import { Lock, Unlock } from "../../assets/svgs";
+import {
+	Check,
+	Error,
+	Forks,
+	IssueOpened,
+	Lock,
+	PullRequests,
+	Star,
+	Unlock,
+	Watchers,
+} from "../../assets/svgs";
 import { DomainEvents } from "../../domain";
 import { GitHubRepositoryRepository } from "../../domain/GitHubRepository";
 import { GitHubRepositoryPullRequestRepository } from "../../domain/GitHubRepositoryPullRequest";
@@ -51,79 +61,99 @@ export const GitHubRepositoryDetail: FC<Props> = ({
 				{repository.private ? <Lock /> : <Unlock />}
 			</header>
 
-			<p>{3 / 0}</p>
-			<p>{repository.description}</p>
+			<main>
+				<section>
+					<h3>Descripción</h3>
+					<p>{repository.description}</p>
+				</section>
 
-			<h3>Repository stats</h3>
-			<table className={styles.detail__table}>
-				<thead>
-					<tr>
-						<th>Stars</th>
-						<th>Watchers</th>
-						<th>Forks</th>
-						<th>Issues</th>
-						<th>Pull Requests</th>
-					</tr>
-				</thead>
+				<section>
+					<h3>Estadísticas del Repositorio</h3>
 
-				<tbody>
-					<tr>
-						<td>{repository.stars}</td>
-						<td>{repository.watchers}</td>
-						<td>{repository.forks}</td>
-						<td>{repository.issues}</td>
-						<td>{repository.pullRequests}</td>
-					</tr>
-				</tbody>
-			</table>
-
-			<h3>Workflow runs status</h3>
-
-			{repository.workflowRunsStatus.length > 0 ? (
-				<>
-					<p>
-						⏱️Last workflow run:{" "}
-						{repository.workflowRunsStatus[0].createdAt.toLocaleDateString("es-ES")}
-					</p>
 					<table className={styles.detail__table}>
 						<thead>
 							<tr>
-								<th>Name</th>
-								<th>Title</th>
-								<th>Date</th>
-								<th>Status</th>
-								<th>Conclusion</th>
+								<th>
+									<Star /> Stars
+								</th>
+								<th>
+									<Watchers /> Watchers
+								</th>
+								<th>
+									<Forks /> Forks
+								</th>
+								<th>
+									<IssueOpened /> Issues
+								</th>
+								<th>
+									<PullRequests /> Pull Requests
+								</th>
 							</tr>
 						</thead>
+
 						<tbody>
-							{repository.workflowRunsStatus.map((run) => (
-								<tr key={run.id}>
-									<td>{run.name}</td>
-									<td>
-										<a href={run.url} target="_blank" rel="noreferrer">
-											{run.title}
-										</a>
-									</td>
-									<td>{run.createdAt.toLocaleDateString("es-ES")}</td>
-									<td>{run.status}</td>
-									<td>{run.conclusion}</td>
-								</tr>
-							))}
+							<tr>
+								<td>{repository.stars}</td>
+								<td>{repository.watchers}</td>
+								<td>{repository.forks}</td>
+								<td>{repository.issues}</td>
+								<td>{repository.pullRequests}</td>
+							</tr>
 						</tbody>
 					</table>
-				</>
-			) : (
-				<p>There are no workflow runs</p>
-			)}
+				</section>
 
-			<section ref={ref}>
-				{isInViewport && (
-					<GitHubRepositoryPullRequests
-						repository={gitHubRepositoryPullRequestRepository}
-						repositoryId={repositoryId}
-					/>
-				)}
-			</section>
+				<section>
+					<h3>Estado de Workflow Runs</h3>
+
+					{repository.workflowRunsStatus.length > 0 ? (
+						<>
+							<p className={styles.middle}>
+								⏱️Última workflow run:{" "}
+								{repository.workflowRunsStatus[0].createdAt.toLocaleDateString("es-ES")}
+							</p>
+
+							<table className={styles.detail__table}>
+								<thead>
+									<tr>
+										<th>Nombre</th>
+										<th>Titulo</th>
+										<th>Fecha</th>
+										<th>Estado</th>
+										<th>Conclusión</th>
+									</tr>
+								</thead>
+								<tbody>
+									{repository.workflowRunsStatus.map((run) => (
+										<tr key={run.id}>
+											<td>{run.name}</td>
+											<td>
+												<a href={run.url} target="_blank" rel="noreferrer">
+													{run.title}
+												</a>
+											</td>
+											<td>{run.createdAt.toLocaleDateString("es-ES")}</td>
+											<td>{run.status === "completed" ? <Check /> : <Error />}</td>
+											<td>{run.conclusion === "sucess" ? <Check /> : <Error />}</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</>
+					) : (
+						<p>There are no workflow runs</p>
+					)}
+				</section>
+
+				<section ref={ref}>
+					{isInViewport && (
+						<GitHubRepositoryPullRequests
+							repository={gitHubRepositoryPullRequestRepository}
+							repositoryId={repositoryId}
+						/>
+					)}
+				</section>
+			</main>
 		</section>
 	);
 };

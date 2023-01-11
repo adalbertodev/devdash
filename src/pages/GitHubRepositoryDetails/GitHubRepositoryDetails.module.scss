@@ -1,6 +1,7 @@
 .repository-detail {
   max-width: 1200px;
   margin: 0.5rem auto;
+  color: #fff;
 
   .header {
     display: flex;
@@ -12,6 +13,7 @@
 
     a {
       color: #1a2233;
+      text-decoration: none;
     }
 
     &__title {
@@ -19,34 +21,51 @@
     }
   }
 
-  .build {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
+  h3,
+  p {
+    margin: 0;
+  }
+
+  main {
+    background-color: #1a2233;
+  }
+
+  section {
+    padding: 1rem;
+    border-bottom: 1px solid #fff;
+
+    .middle {
+      margin-bottom: 1rem;
+    }
+  }
+
+  h3 {
     margin-bottom: 1rem;
   }
 
   .detail__table {
     width: 100%;
-    margin-top: 1rem;
     text-align: center;
     border-collapse: collapse;
 
     thead tr th {
       border-bottom: 1px solid black;
+      font-size: 1.25rem;
     }
 
     tbody {
       a {
         color: inherit;
+        text-decoration: none;
       }
 
       tr:nth-child(odd) {
-        background-color: #d0d0d0;
+        background-color: #121824;
       }
 
       tr td {
         padding: 0.5rem;
+        border: 1px solid #000;
       }
     }
   }

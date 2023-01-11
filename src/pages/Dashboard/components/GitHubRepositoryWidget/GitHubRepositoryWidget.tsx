@@ -8,7 +8,7 @@ import {
 	IssueOpened,
 	Lock,
 	PullRequests,
-	Start,
+	Star,
 	Unlock,
 	Watchers,
 } from "../../../../assets/svgs";
@@ -43,7 +43,7 @@ export const GitHubRepositoryWidget: FC<Props> = ({ widget }) => {
 
 			<footer className={styles.widget__footer}>
 				<div className={styles.widget__stat}>
-					<Start />
+					<Star />
 					<span>{toPrefixedNumber(widget.stars)}</span>
 				</div>
 				<div className={styles.widget__stat}>

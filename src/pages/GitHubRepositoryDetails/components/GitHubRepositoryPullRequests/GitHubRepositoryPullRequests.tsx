@@ -16,7 +16,7 @@ export const GitHubRepositoryPullRequests: FC<Props> = ({ repository, repository
 
 	return (
 		<>
-			<h3>Pull requests</h3>
+			<h3>Pull Requests</h3>
 			<table className={styles.detail__table}>
 				<thead>
 					<tr>

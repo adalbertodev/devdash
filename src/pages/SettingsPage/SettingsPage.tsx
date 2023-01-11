@@ -51,7 +51,12 @@ export const SettingsPage: FC<Props> = ({ repository }) => {
 
 			<form className={styles.form} onSubmit={submitForm}>
 				<label htmlFor="ghAccessToken">GitHub Access Token</label>
-				<TextField id="ghAccessToken" name="ghAccessToken" mode="light" />
+				<TextField
+					id="ghAccessToken"
+					name="ghAccessToken"
+					mode="light"
+					placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+				/>
 
 				<div className={styles.submit_section}>
 					<SubmitButton>Guardar</SubmitButton>
