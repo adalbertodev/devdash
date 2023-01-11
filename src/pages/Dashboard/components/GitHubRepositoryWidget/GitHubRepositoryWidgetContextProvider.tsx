@@ -1,7 +1,8 @@
 import { createContext, FC, useContext, useEffect, useState } from "react";
 
 import { config } from "../../../../devdash_config";
-import { DomainEvents, RepositoryWidget, RepositoryWidgetRepository } from "../../../../domain";
+import { DomainEvents } from "../../../../domain";
+import { RepositoryWidget, RepositoryWidgetRepository } from "../../../../domain/RepositoryWidget";
 
 interface ContextProps {
 	repositoryWidgets: RepositoryWidget[];

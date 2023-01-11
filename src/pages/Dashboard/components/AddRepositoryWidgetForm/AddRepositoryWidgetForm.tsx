@@ -3,14 +3,13 @@ import { FC, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { Add, BackArrow } from "../../../../assets/svgs";
-import { TextField } from "../../../../components/Input";
-import { SubmitButton } from "../../../../components/SubmitButton";
+import { SubmitButton, TextField } from "../../../../components";
+import { FormEvent } from "../../../../domain";
+import { NotUrlValidError } from "../../../../domain/errors";
 import {
-	FormEvent,
-	NotUrlValidError,
 	RepositoryAlreadyExistsError,
 	RepositoryWidgetRepository,
-} from "../../../../domain";
+} from "../../../../domain/RepositoryWidget";
 import { useAddRepositoryWidget } from "../../hooks";
 import styles from "./AddRepositoryWidgetForm.module.scss";
 

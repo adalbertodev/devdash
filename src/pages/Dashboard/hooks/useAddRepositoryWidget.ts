@@ -1,10 +1,10 @@
+import { DomainEvents } from "../../../domain";
+import { NotUrlValidError } from "../../../domain/errors";
 import {
-	DomainEvents,
-	NotUrlValidError,
 	RepositoryAlreadyExistsError,
 	RepositoryWidget,
 	RepositoryWidgetRepository,
-} from "../../../domain";
+} from "../../../domain/RepositoryWidget";
 
 interface AddRepositoryWidgetTools {
 	save: (

@@ -2,11 +2,9 @@ import { FC, useEffect, useMemo } from "react";
 import { Navigate, useParams } from "react-router-dom";
 
 import { Lock, Unlock } from "../../assets/svgs";
-import {
-	DomainEvents,
-	GitHubRepositoryPullRequestRepository,
-	GitHubRepositoryRepository,
-} from "../../domain";
+import { DomainEvents } from "../../domain";
+import { GitHubRepositoryRepository } from "../../domain/GitHubRepository";
+import { GitHubRepositoryPullRequestRepository } from "../../domain/GitHubRepositoryPullRequest";
 import { useInViewport } from "../../hooks";
 import { GitHubRepositoryPullRequests } from "./components";
 import styles from "./GitHubRepositoryDetails.module.scss";

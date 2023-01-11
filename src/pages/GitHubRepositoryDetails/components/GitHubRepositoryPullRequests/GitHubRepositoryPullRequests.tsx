@@ -1,7 +1,8 @@
 import { FC } from "react";
 
-import { Loader } from "../../../../components/Loader";
-import { GitHubRepositoryPullRequestRepository, RepositoryId } from "../../../../domain";
+import { Loader } from "../../../../components";
+import { RepositoryId } from "../../../../domain/GitHubRepository";
+import { GitHubRepositoryPullRequestRepository } from "../../../../domain/GitHubRepositoryPullRequest";
 import styles from "../../GitHubRepositoryDetails.module.scss";
 import { useGitHubRepositoryPullRequests } from "../../hooks";
 

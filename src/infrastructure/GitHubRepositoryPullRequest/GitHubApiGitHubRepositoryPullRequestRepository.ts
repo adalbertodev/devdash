@@ -12,7 +12,7 @@ export class GitHubApiGitHubRepositoryPullRequestRepository
 
 	constructor(private readonly personalAccessToken: string) {}
 
-	async search(repositoryId: RepositoryId): Promise<GitHubRepositoryPullRequest[]> {
+	public search = async (repositoryId: RepositoryId): Promise<GitHubRepositoryPullRequest[]> => {
 		const url = this.endpoints
 			.replace("$organization", repositoryId.organization)
 			.replace("$name", repositoryId.name);
@@ -27,5 +27,5 @@ export class GitHubApiGitHubRepositoryPullRequestRepository
 					createdAt: new Date(pr.created_at),
 				}));
 			});
-	}
+	};
 }

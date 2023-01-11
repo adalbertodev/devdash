@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { Layout } from "../../components/Layout";
-import { DashboardFactory } from "../Dashboard/DashboardFactory";
+import { DashboardFactory } from "../Dashboard";
 import { GitHubRepositoryDetailFactory } from "../GitHubRepositoryDetails";
-import { ConfigFactory } from "../SettingsPage";
+import { SettingsPageFactory } from "../SettingsPage";
 import { RouterMiddleware } from "./RouterMiddleware";
 
 const router = createBrowserRouter([
@@ -21,11 +21,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/repository/:organization/:name",
-				element: GitHubRepositoryDetailFactory.create(),
+				element: <GitHubRepositoryDetailFactory />,
 			},
 			{
 				path: "/config",
-				element: <ConfigFactory />,
+				element: <SettingsPageFactory />,
 			},
 		],
 	},

@@ -1,9 +1,9 @@
 import {
-	GitHubApiGitHubRepositoryRepository,
+	GitHubAccessTokenSearcher,
 	LocalStorageGitHubAccessTokenRepository,
-	LocalStorageRepositoryWidgetRepository,
-} from "../../infrastructure";
-import { GitHubAccessTokenSearcher } from "../../infrastructure/GitHubAccessToken";
+} from "../../infrastructure/GitHubAccessToken";
+import { GitHubApiGitHubRepositoryRepository } from "../../infrastructure/GitHubRepository";
+import { LocalStorageRepositoryWidgetRepository } from "../../infrastructure/RepositoryWidget";
 import { useRepositoryWidgetContext } from "./components/GitHubRepositoryWidget";
 import { Dashboard } from "./Dashboard";
 

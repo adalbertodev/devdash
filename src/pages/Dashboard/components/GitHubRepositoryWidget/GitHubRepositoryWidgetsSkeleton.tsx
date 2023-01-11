@@ -67,7 +67,7 @@ export const RepositoryWidgetsSkeleton: FC<Props> = ({ numberOfWidgets }) => {
 	return (
 		<SkeletonTheme baseColor="#1A2233" highlightColor="#535966">
 			{[...new Array<number[]>(numberOfWidgets)].map((_, i) => (
-				<RepositoryWidgetSkeleton key={`WidgetSkeletor_${i}`} />
+				<RepositoryWidgetSkeleton key={`WidgetSkeleton_${i}`} />
 			))}
 		</SkeletonTheme>
 	);

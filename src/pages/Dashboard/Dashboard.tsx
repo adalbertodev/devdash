@@ -1,11 +1,8 @@
 import { FC, useEffect, useMemo } from "react";
 
-import {
-	DomainEvents,
-	GitHubRepositoryRepository,
-	RepositoryWidget,
-	RepositoryWidgetRepository,
-} from "../../domain";
+import { DomainEvents } from "../../domain";
+import { GitHubRepositoryRepository } from "../../domain/GitHubRepository";
+import { RepositoryWidget, RepositoryWidgetRepository } from "../../domain/RepositoryWidget";
 import { AddRepositoryWidgetForm } from "./components/AddRepositoryWidgetForm";
 import {
 	GitHubRepositoryWidget,

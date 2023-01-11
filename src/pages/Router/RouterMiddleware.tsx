@@ -1,8 +1,10 @@
 import { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { LocalStorageGitHubAccessTokenRepository } from "../../infrastructure";
-import { GitHubAccessTokenSearcher } from "../../infrastructure/GitHubAccessToken";
+import {
+	GitHubAccessTokenSearcher,
+	LocalStorageGitHubAccessTokenRepository,
+} from "../../infrastructure/GitHubAccessToken";
 
 const ghAccessTokenRepository = new LocalStorageGitHubAccessTokenRepository();
 const ghAccessTokenSearcher = new GitHubAccessTokenSearcher(ghAccessTokenRepository);
