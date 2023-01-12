@@ -1,4 +1,4 @@
-import { LocalStorageGitHubAccessTokenRepository } from "../../infrastructure";
+import { LocalStorageGitHubAccessTokenRepository } from "../../infrastructure/GitHubAccessToken";
 import { SettingsPage } from "./SettingsPage";
 
 const repository = new LocalStorageGitHubAccessTokenRepository();

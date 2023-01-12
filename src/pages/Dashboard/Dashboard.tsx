@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo } from "react";
 
-import { DomainEvents } from "../../domain";
+import { DomainEvents } from "../../domain/DomainEvents";
 import { GitHubRepositoryRepository } from "../../domain/GitHubRepository";
 import { RepositoryWidget, RepositoryWidgetRepository } from "../../domain/RepositoryWidget";
 import { AddRepositoryWidgetForm } from "./components/AddRepositoryWidgetForm";
@@ -46,6 +46,7 @@ export const Dashboard: FC<Props> = ({
 						<span>No hay widgets configurados.</span>
 					</div>
 				)}
+
 				{isLoading ? (
 					<RepositoryWidgetsSkeleton numberOfWidgets={gitHubRepositoryUrls.length} />
 				) : (

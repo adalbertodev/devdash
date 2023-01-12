@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mock } from "jest-mock-extended";
 
+import { DomainEvents } from "../../../../../src/domain/DomainEvents";
 import { RepositoryWidget } from "../../../../../src/domain/RepositoryWidget/RepositoryWidget";
 import { RepositoryWidgetRepository } from "../../../../../src/domain/RepositoryWidget/RepositoryWidgetRepository";
 import { AddRepositoryWidgetForm } from "../../../../../src/pages/Dashboard/components/AddRepositoryWidgetForm/AddRepositoryWidgetForm";
@@ -63,7 +64,7 @@ describe("AddRepositoryWidgetForm", () => {
 		);
 
 		expect(dispatchEventSpy).toHaveBeenCalledWith(expect.any(Event));
-		expect(dispatchEventSpy.mock.calls[0][0].type).toBe("repositoryWidgetAdded");
+		expect(dispatchEventSpy.mock.calls[0][0].type).toBe(DomainEvents.repositoryWidgetsChanged);
 	});
 
 	it("show error when repository already exist in Dashboard", async () => {

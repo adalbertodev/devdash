@@ -12,7 +12,7 @@ import {
 	Unlock,
 	Watchers,
 } from "../../../../assets/svgs";
-import { GitHubRepository } from "../../../../domain";
+import { GitHubRepository } from "../../../../domain/GitHubRepository";
 import { isoToReadableDate, toPrefixedNumber } from "../../../../utils";
 import styles from "./GitHubRepositoryWidget.module.scss";
 

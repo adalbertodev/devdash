@@ -21,7 +21,7 @@ import { RepositoryWidgetRepository } from "../../domain/RepositoryWidget";
 import { useInViewport } from "../../hooks";
 import { GitHubRepositoryPullRequests } from "./components";
 import styles from "./GitHubRepositoryDetails.module.scss";
-import { useGitHubRepository } from "./hooks";
+import { useDeleteRepositoryWidget, useGitHubRepository } from "./hooks";
 
 interface Props {
 	gitHubRepositoryRepository: GitHubRepositoryRepository;
@@ -42,23 +42,15 @@ export const GitHubRepositoryDetail: FC<Props> = ({
 	const repositoryId = useMemo(() => ({ organization, name }), [organization, name]);
 
 	const { repository, isLoading } = useGitHubRepository(gitHubRepositoryRepository, repositoryId);
+	const { deleteRepositoryWidget } = useDeleteRepositoryWidget(repositoryWidgetRepository);
 
 	const deleteRepository = useCallback(async () => {
-		const repositoryWidget = (await repositoryWidgetRepository.search()).find(
-			(repositoryWidget) =>
-				repositoryWidget.repositoryUrl === `https://github.com/${organization}/${name}`
-		);
+		await deleteRepositoryWidget(repositoryId);
 
-		if (repositoryWidget) {
-			await repositoryWidgetRepository
-				.delete(repositoryWidget)
-				.catch((error: Error) => console.error(error));
-		}
-
-		document.dispatchEvent(new CustomEvent(DomainEvents.repositoryWidgetAdded));
+		document.dispatchEvent(new CustomEvent(DomainEvents.repositoryWidgetsChanged));
 
 		navigate("/");
-	}, [name, navigate, organization, repositoryWidgetRepository]);
+	}, [deleteRepositoryWidget, navigate, repositoryId]);
 
 	useEffect(() => {
 		if (!isLoading) {

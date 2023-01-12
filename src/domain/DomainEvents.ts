@@ -1,4 +1,4 @@
 export const enum DomainEvents {
-	repositoryWidgetAdded = "repositoryWidgetAdded",
+	repositoryWidgetsChanged = "repositoryWidgetsChanged",
 	pageLoaded = "pageLoaded",
 }
