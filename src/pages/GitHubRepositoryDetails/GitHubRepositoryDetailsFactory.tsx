@@ -6,6 +6,7 @@ import {
 	GitHubAccessTokenSearcher,
 	LocalStorageGitHubAccessTokenRepository,
 } from "../../infrastructure/GitHubAccessToken";
+import { LocalStorageRepositoryWidgetRepository } from "../../infrastructure/RepositoryWidget";
 import { GitHubRepositoryDetail } from "./GitHubRepositoryDetails";
 
 const ghAccessTokenRepository = new LocalStorageGitHubAccessTokenRepository();
@@ -15,12 +16,14 @@ const gitHubRepositoryRepository = new GitHubApiGitHubRepositoryRepository(ghAcc
 const gitHubRepositoryPullRequestRepository = new GitHubApiGitHubRepositoryPullRequestRepository(
 	ghAccessToken
 );
+const repositoryWidgetRepository = new LocalStorageRepositoryWidgetRepository();
 
 export const GitHubRepositoryDetailFactory = () => {
 	return (
 		<GitHubRepositoryDetail
 			gitHubRepositoryRepository={gitHubRepositoryRepository}
 			gitHubRepositoryPullRequestRepository={gitHubRepositoryPullRequestRepository}
+			repositoryWidgetRepository={repositoryWidgetRepository}
 		/>
 	);
 };

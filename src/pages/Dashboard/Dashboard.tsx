@@ -41,6 +41,11 @@ export const Dashboard: FC<Props> = ({
 	return (
 		<>
 			<section className={styles.container}>
+				{!isLoading && repositoryData.length === 0 && (
+					<div className={styles.empty}>
+						<span>No hay widgets configurados.</span>
+					</div>
+				)}
 				{isLoading ? (
 					<RepositoryWidgetsSkeleton numberOfWidgets={gitHubRepositoryUrls.length} />
 				) : (
@@ -53,12 +58,6 @@ export const Dashboard: FC<Props> = ({
 				)}
 				<AddRepositoryWidgetForm repository={repositoryWidgetRepository} />
 			</section>
-
-			{!isLoading && repositoryData.length === 0 && (
-				<div className={styles.empty}>
-					<span>No hay widgets configurados.</span>
-				</div>
-			)}
 		</>
 	);
 };

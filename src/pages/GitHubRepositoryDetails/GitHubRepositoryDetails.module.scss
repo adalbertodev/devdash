@@ -16,8 +16,39 @@
       text-decoration: none;
     }
 
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
     &__title {
-      margin: 0.5rem;
+      display: flex;
+      align-items: center;
+
+      h2 {
+        margin: 0.5rem;
+      }
+    }
+
+    .deleteButton {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(16px + 1.3rem);
+      height: calc(16px + 1.3rem);
+      background-color: transparent;
+      border: none;
+      border-radius: 100%;
+
+      &:hover {
+        background-color: #1a223340;
+        cursor: pointer;
+      }
+
+      img {
+        width: 16px;
+        height: 16px;
+      }
     }
   }
 
@@ -49,8 +80,8 @@
     border-collapse: collapse;
 
     thead tr th {
-      border-bottom: 1px solid black;
       font-size: 1.25rem;
+      border-bottom: 1px solid black;
     }
 
     tbody {

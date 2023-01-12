@@ -22,4 +22,15 @@ export class LocalStorageRepositoryWidgetRepository implements RepositoryWidgetR
 			JSON.stringify(currentRepositoryWidget.concat(widget))
 		);
 	};
+
+	public delete = async (widget: RepositoryWidget): Promise<void> => {
+		const currentRepositoryWidget = await this.search();
+
+		localStorage.setItem(
+			this.localStorageKey,
+			JSON.stringify(
+				currentRepositoryWidget.filter((repositoryWidget) => repositoryWidget.id !== widget.id)
+			)
+		);
+	};
 }

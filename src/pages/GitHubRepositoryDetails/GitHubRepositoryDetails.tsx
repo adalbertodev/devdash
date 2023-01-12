@@ -1,6 +1,7 @@
-import { FC, useEffect, useMemo } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 
+import closeImage from "../../assets/imgs/close.png";
 import {
 	Check,
 	Error,
@@ -12,9 +13,11 @@ import {
 	Unlock,
 	Watchers,
 } from "../../assets/svgs";
+import { Modal } from "../../components/Modal";
 import { DomainEvents } from "../../domain";
 import { GitHubRepositoryRepository } from "../../domain/GitHubRepository";
 import { GitHubRepositoryPullRequestRepository } from "../../domain/GitHubRepositoryPullRequest";
+import { RepositoryWidgetRepository } from "../../domain/RepositoryWidget";
 import { useInViewport } from "../../hooks";
 import { GitHubRepositoryPullRequests } from "./components";
 import styles from "./GitHubRepositoryDetails.module.scss";
@@ -23,18 +26,39 @@ import { useGitHubRepository } from "./hooks";
 interface Props {
 	gitHubRepositoryRepository: GitHubRepositoryRepository;
 	gitHubRepositoryPullRequestRepository: GitHubRepositoryPullRequestRepository;
+	repositoryWidgetRepository: RepositoryWidgetRepository;
 }
 
 export const GitHubRepositoryDetail: FC<Props> = ({
 	gitHubRepositoryRepository,
 	gitHubRepositoryPullRequestRepository,
+	repositoryWidgetRepository,
 }) => {
 	const { isInViewport, ref } = useInViewport();
+	const navigate = useNavigate();
 	const { organization, name } = useParams() as { organization: string; name: string };
+	const [isCheckDeleteModalOpen, setIsCheckDeleteModalOpen] = useState(false);
 
 	const repositoryId = useMemo(() => ({ organization, name }), [organization, name]);
 
 	const { repository, isLoading } = useGitHubRepository(gitHubRepositoryRepository, repositoryId);
+
+	const deleteRepository = useCallback(async () => {
+		const repositoryWidget = (await repositoryWidgetRepository.search()).find(
+			(repositoryWidget) =>
+				repositoryWidget.repositoryUrl === `https://github.com/${organization}/${name}`
+		);
+
+		if (repositoryWidget) {
+			await repositoryWidgetRepository
+				.delete(repositoryWidget)
+				.catch((error: Error) => console.error(error));
+		}
+
+		document.dispatchEvent(new CustomEvent(DomainEvents.repositoryWidgetAdded));
+
+		navigate("/");
+	}, [name, navigate, organization, repositoryWidgetRepository]);
 
 	useEffect(() => {
 		if (!isLoading) {
@@ -53,12 +77,22 @@ export const GitHubRepositoryDetail: FC<Props> = ({
 	return (
 		<section className={styles["repository-detail"]}>
 			<header className={styles.header}>
-				<a href={repository.url} target="_blank" rel="noreferrer">
-					<h2 className={styles.header__title}>
-						{repository.id.organization}/{repository.id.name}
-					</h2>
-				</a>
-				{repository.private ? <Lock /> : <Unlock />}
+				<div className={styles.header__title}>
+					<a href={repository.url} target="_blank" rel="noreferrer">
+						<h2>
+							{repository.id.organization}/{repository.id.name}
+						</h2>
+					</a>
+					{repository.private ? <Lock /> : <Unlock />}
+				</div>
+
+				<button className={styles.deleteButton} onClick={() => setIsCheckDeleteModalOpen(true)}>
+					<img src={closeImage} alt="X" />
+				</button>
+
+				{isCheckDeleteModalOpen && (
+					<Modal setIsOpen={setIsCheckDeleteModalOpen} deleteAction={deleteRepository} />
+				)}
 			</header>
 
 			<main>
