@@ -129,7 +129,29 @@ describe("AddRepositoryWidgetForm", () => {
 		await waitFor(() => expect(mockRepository.save).not.toHaveBeenCalled());
 	});
 
-	it("disable add button while data is isvalid", async () => {
-		// TODO
+	it("back button of form desactivate form", async () => {
+		mockRepository.search.mockResolvedValue([]);
+
+		render(<AddRepositoryWidgetForm repository={mockRepository} />);
+
+		const addButton = await screen.findByRole("button", {
+			name: new RegExp("Añadir", "i"),
+		});
+		userEvent.click(addButton);
+
+		const backButton = await screen.findByRole("button", {
+			name: /back/i,
+		});
+		userEvent.click(backButton);
+
+		const form = screen.queryByRole("form", {
+			name: /add-repository-form/i,
+		});
+
+		expect(form).not.toBeInTheDocument();
 	});
+
+	// it("disable add button while data is isvalid", async () => {
+	// 	// TODO:
+	// });
 });

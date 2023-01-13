@@ -53,11 +53,15 @@ export const AddRepositoryWidgetForm: FC<Props> = ({ repository }) => {
 					</button>
 				) : (
 					<>
-						<button className={styles.back_button} onClick={() => setIsFormActive(false)}>
+						<button
+							aria-label="back"
+							className={styles.back_button}
+							onClick={() => setIsFormActive(false)}
+						>
 							<BackArrow />
 						</button>
 
-						<form className={styles.form} onSubmit={submitForm}>
+						<form aria-label="add-repository-form" className={styles.form} onSubmit={submitForm}>
 							<div>
 								<label htmlFor="repositoryUrl">URL del repositorio</label>
 								<TextField
