@@ -79,7 +79,7 @@ export const GitHubRepositoryDetail: FC<Props> = ({
 				</div>
 
 				<button className={styles.deleteButton} onClick={() => setIsCheckDeleteModalOpen(true)}>
-					<img src={closeImage} alt="X" />
+					<img src={closeImage} alt="Delete Button" />
 				</button>
 
 				{isCheckDeleteModalOpen && (
