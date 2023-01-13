@@ -1,7 +1,8 @@
 import { FC } from "react";
 
-import { Loader } from "../../../../components/Loader";
-import { GitHubRepositoryPullRequestRepository, RepositoryId } from "../../../../domain";
+import { Loader } from "../../../../components";
+import { RepositoryId } from "../../../../domain/GitHubRepository";
+import { GitHubRepositoryPullRequestRepository } from "../../../../domain/GitHubRepositoryPullRequest";
 import styles from "../../GitHubRepositoryDetails.module.scss";
 import { useGitHubRepositoryPullRequests } from "../../hooks";
 
@@ -15,7 +16,7 @@ export const GitHubRepositoryPullRequests: FC<Props> = ({ repository, repository
 
 	return (
 		<>
-			<h3>Pull requests</h3>
+			<h3>Pull Requests</h3>
 			<table className={styles.detail__table}>
 				<thead>
 					<tr>

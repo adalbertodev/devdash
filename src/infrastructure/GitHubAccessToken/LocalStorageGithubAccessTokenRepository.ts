@@ -3,13 +3,13 @@ import { GitHubAccessTokenRepository } from "../../domain";
 export class LocalStorageGitHubAccessTokenRepository implements GitHubAccessTokenRepository {
 	localStorageKey = "github_access_token";
 
-	search(): string {
+	public search = (): string => {
 		const token = localStorage.getItem(this.localStorageKey);
 
 		return token ?? "";
-	}
+	};
 
-	save(token: string): void {
+	public save = (token: string): void => {
 		localStorage.setItem(this.localStorageKey, token);
-	}
+	};
 }

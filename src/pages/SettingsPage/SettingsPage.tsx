@@ -1,9 +1,10 @@
-import { FC, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 
+import { SubmitButton, TextField } from "../../components";
 import { DomainEvents } from "../../domain";
 import { FormEvent } from "../../domain/FormEvent";
 import { GitHubAccessTokenRepository } from "../../domain/GitHubAccessToken";
-import { useSaveConfig } from "./hooks/useSaveConfig";
+import { useSaveConfig } from "./hooks";
 import styles from "./SettingsPage.module.scss";
 
 type FormFields = { ghAccessToken: string };
@@ -12,16 +13,19 @@ interface Props {
 	repository: GitHubAccessTokenRepository;
 }
 
-export const Config: FC<Props> = ({ repository }) => {
+export const SettingsPage: FC<Props> = ({ repository }) => {
 	const { save } = useSaveConfig(repository);
 
-	const submitForm = (ev: FormEvent<FormFields>) => {
-		ev.preventDefault();
-		const { ghAccessToken } = ev.target.elements;
-		save(ghAccessToken.value);
+	const submitForm = useCallback(
+		(ev: FormEvent<FormFields>) => {
+			ev.preventDefault();
+			const { ghAccessToken } = ev.target.elements;
+			save(ghAccessToken.value);
 
-		window.location.href = "/";
-	};
+			window.location.href = "/";
+		},
+		[save]
+	);
 
 	useEffect(() => {
 		document.dispatchEvent(new CustomEvent(DomainEvents.pageLoaded));
@@ -47,9 +51,16 @@ export const Config: FC<Props> = ({ repository }) => {
 
 			<form className={styles.form} onSubmit={submitForm}>
 				<label htmlFor="ghAccessToken">GitHub Access Token</label>
-				<input id="ghAccessToken" name="ghAccessToken" type="text" />
+				<TextField
+					id="ghAccessToken"
+					name="ghAccessToken"
+					mode="light"
+					placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+				/>
 
-				<input type="submit" value="Guardar" />
+				<div className={styles.submit_section}>
+					<SubmitButton>Guardar</SubmitButton>
+				</div>
 			</form>
 		</section>
 	);

@@ -1,11 +1,8 @@
 import { FC, useEffect, useMemo } from "react";
 
-import {
-	DomainEvents,
-	GitHubRepositoryRepository,
-	RepositoryWidget,
-	RepositoryWidgetRepository,
-} from "../../domain";
+import { DomainEvents } from "../../domain/DomainEvents";
+import { GitHubRepositoryRepository } from "../../domain/GitHubRepository";
+import { RepositoryWidget, RepositoryWidgetRepository } from "../../domain/RepositoryWidget";
 import { AddRepositoryWidgetForm } from "./components/AddRepositoryWidgetForm";
 import {
 	GitHubRepositoryWidget,
@@ -44,6 +41,12 @@ export const Dashboard: FC<Props> = ({
 	return (
 		<>
 			<section className={styles.container}>
+				{!isLoading && repositoryData.length === 0 && (
+					<div className={styles.empty}>
+						<span>No hay widgets configurados.</span>
+					</div>
+				)}
+
 				{isLoading ? (
 					<RepositoryWidgetsSkeleton numberOfWidgets={gitHubRepositoryUrls.length} />
 				) : (
@@ -56,12 +59,6 @@ export const Dashboard: FC<Props> = ({
 				)}
 				<AddRepositoryWidgetForm repository={repositoryWidgetRepository} />
 			</section>
-
-			{!isLoading && repositoryData.length === 0 && (
-				<div className={styles.empty}>
-					<span>No hay widgets configurados.</span>
-				</div>
-			)}
 		</>
 	);
 };

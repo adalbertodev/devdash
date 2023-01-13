@@ -1,24 +1,25 @@
-import { config } from "../../devdash_config";
 import {
 	GitHubApiGitHubRepositoryPullRequestRepository,
 	GitHubApiGitHubRepositoryRepository,
 } from "../../infrastructure";
+import { LocalStorageGitHubAccessTokenRepository } from "../../infrastructure/GitHubAccessToken";
+import { LocalStorageRepositoryWidgetRepository } from "../../infrastructure/RepositoryWidget";
 import { GitHubRepositoryDetail } from "./GitHubRepositoryDetails";
 
-const gitHubRepositoryRepository = new GitHubApiGitHubRepositoryRepository(
-	config.github_access_token
-);
+const ghAccessTokenRepository = new LocalStorageGitHubAccessTokenRepository();
+const ghAccessToken = ghAccessTokenRepository.search();
+const gitHubRepositoryRepository = new GitHubApiGitHubRepositoryRepository(ghAccessToken);
 const gitHubRepositoryPullRequestRepository = new GitHubApiGitHubRepositoryPullRequestRepository(
-	config.github_access_token
+	ghAccessToken
 );
+const repositoryWidgetRepository = new LocalStorageRepositoryWidgetRepository();
 
-export class GitHubRepositoryDetailFactory {
-	static create(): React.ReactNode {
-		return (
-			<GitHubRepositoryDetail
-				gitHubRepositoryRepository={gitHubRepositoryRepository}
-				gitHubRepositoryPullRequestRepository={gitHubRepositoryPullRequestRepository}
-			/>
-		);
-	}
-}
+export const GitHubRepositoryDetailFactory = () => {
+	return (
+		<GitHubRepositoryDetail
+			gitHubRepositoryRepository={gitHubRepositoryRepository}
+			gitHubRepositoryPullRequestRepository={gitHubRepositoryPullRequestRepository}
+			repositoryWidgetRepository={repositoryWidgetRepository}
+		/>
+	);
+};

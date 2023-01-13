@@ -27,7 +27,7 @@ export const useGitHubRepositoryPullRequests = (
 				setPullRequests(pullRequests);
 				setIsLoading(false);
 			})
-			.catch((error) => console.error(error));
+			.catch((error: Error) => console.error(error));
 	}, [repository, repositoryId]);
 
 	return {

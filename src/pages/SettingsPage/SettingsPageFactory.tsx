@@ -1,8 +1,8 @@
-import { LocalStorageGitHubAccessTokenRepository } from "../../infrastructure";
-import { Config } from "./SettingsPage";
+import { LocalStorageGitHubAccessTokenRepository } from "../../infrastructure/GitHubAccessToken";
+import { SettingsPage } from "./SettingsPage";
 
 const repository = new LocalStorageGitHubAccessTokenRepository();
 
-export const ConfigFactory = () => {
-	return <Config repository={repository} />;
+export const SettingsPageFactory = () => {
+	return <SettingsPage repository={repository} />;
 };

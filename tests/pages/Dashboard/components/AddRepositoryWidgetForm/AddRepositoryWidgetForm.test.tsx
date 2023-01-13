@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mock } from "jest-mock-extended";
 
+import { DomainEvents } from "../../../../../src/domain/DomainEvents";
 import { RepositoryWidget } from "../../../../../src/domain/RepositoryWidget/RepositoryWidget";
 import { RepositoryWidgetRepository } from "../../../../../src/domain/RepositoryWidget/RepositoryWidgetRepository";
 import { AddRepositoryWidgetForm } from "../../../../../src/pages/Dashboard/components/AddRepositoryWidgetForm/AddRepositoryWidgetForm";
@@ -63,7 +64,7 @@ describe("AddRepositoryWidgetForm", () => {
 		);
 
 		expect(dispatchEventSpy).toHaveBeenCalledWith(expect.any(Event));
-		expect(dispatchEventSpy.mock.calls[0][0].type).toBe("repositoryWidgetAdded");
+		expect(dispatchEventSpy.mock.calls[0][0].type).toBe(DomainEvents.repositoryWidgetsChanged);
 	});
 
 	it("show error when repository already exist in Dashboard", async () => {
@@ -93,11 +94,9 @@ describe("AddRepositoryWidgetForm", () => {
 		});
 		userEvent.click(submitButton);
 
-		const errorMessage = await screen.findByRole("alert", {
-			description: /Repositorio duplicado/i,
-		});
+		const errorMessage = await screen.findByRole("alert");
 
-		expect(errorMessage).toBeInTheDocument();
+		expect(errorMessage.innerHTML).toMatch(/Repositorio duplicado/i);
 		await waitFor(() => expect(mockRepository.save).not.toHaveBeenCalled());
 	});
 
@@ -124,15 +123,35 @@ describe("AddRepositoryWidgetForm", () => {
 		});
 		userEvent.click(submitButton);
 
-		const errorMessage = await screen.findByRole("alert", {
-			description: /URL invalida/i,
-		});
+		const errorMessage = await screen.findByRole("alert");
 
-		expect(errorMessage).toBeInTheDocument();
+		expect(errorMessage.innerHTML).toMatch(/URL inválida/i);
 		await waitFor(() => expect(mockRepository.save).not.toHaveBeenCalled());
 	});
 
-	it("disable add button while data is isvalid", async () => {
-		// TODO
+	it("back button of form desactivate form", async () => {
+		mockRepository.search.mockResolvedValue([]);
+
+		render(<AddRepositoryWidgetForm repository={mockRepository} />);
+
+		const addButton = await screen.findByRole("button", {
+			name: new RegExp("Añadir", "i"),
+		});
+		userEvent.click(addButton);
+
+		const backButton = await screen.findByRole("button", {
+			name: /back/i,
+		});
+		userEvent.click(backButton);
+
+		const form = screen.queryByRole("form", {
+			name: /add-repository-form/i,
+		});
+
+		expect(form).not.toBeInTheDocument();
 	});
+
+	// it("disable add button while data is isvalid", async () => {
+	// 	// TODO:
+	// });
 });

@@ -5,9 +5,9 @@ interface SaveConfig {
 }
 
 export const useSaveConfig = (repository: GitHubAccessTokenRepository): SaveConfig => {
-	function save(token: string): void {
+	const save = (token: string): void => {
 		repository.save(token);
-	}
+	};
 
 	return { save };
 };

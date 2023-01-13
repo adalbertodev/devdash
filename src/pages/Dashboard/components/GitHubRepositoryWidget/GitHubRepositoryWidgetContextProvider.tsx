@@ -1,7 +1,8 @@
 import { createContext, FC, useContext, useEffect, useState } from "react";
 
 import { config } from "../../../../devdash_config";
-import { DomainEvents, RepositoryWidget, RepositoryWidgetRepository } from "../../../../domain";
+import { DomainEvents } from "../../../../domain/DomainEvents";
+import { RepositoryWidget, RepositoryWidgetRepository } from "../../../../domain/RepositoryWidget";
 
 interface ContextProps {
 	repositoryWidgets: RepositoryWidget[];
@@ -49,10 +50,10 @@ export const RepositoryWidgetContextProvider: FC<Props> = ({ children, repositor
 				.catch((error) => console.error(error));
 		};
 
-		document.addEventListener(DomainEvents.repositoryWidgetAdded, reloadRepositoryWidgets);
+		document.addEventListener(DomainEvents.repositoryWidgetsChanged, reloadRepositoryWidgets);
 
 		return () => {
-			document.removeEventListener(DomainEvents.repositoryWidgetAdded, reloadRepositoryWidgets);
+			document.removeEventListener(DomainEvents.repositoryWidgetsChanged, reloadRepositoryWidgets);
 		};
 	}, [repository]);
 

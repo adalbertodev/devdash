@@ -8,28 +8,13 @@ import {
 	IssueOpened,
 	Lock,
 	PullRequests,
-	Start,
+	Star,
 	Unlock,
 	Watchers,
 } from "../../../../assets/svgs";
-import { GitHubRepository } from "../../../../domain";
+import { GitHubRepository } from "../../../../domain/GitHubRepository";
+import { isoToReadableDate, toPrefixedNumber } from "../../../../utils";
 import styles from "./GitHubRepositoryWidget.module.scss";
-
-const isoToReadableDate = (lastUpdateDate: Date): string => {
-	const currentDate = new Date();
-	const diffTime = currentDate.getTime() - lastUpdateDate.getTime();
-	const diffDays = Math.round(diffTime / (1000 * 3600 * 24));
-
-	if (diffDays === 0) {
-		return "today";
-	}
-
-	if (diffDays > 30) {
-		return "more than a month ago";
-	}
-
-	return `${diffDays} days ago`;
-};
 
 interface Props {
 	widget: GitHubRepository;
@@ -58,24 +43,24 @@ export const GitHubRepositoryWidget: FC<Props> = ({ widget }) => {
 
 			<footer className={styles.widget__footer}>
 				<div className={styles.widget__stat}>
-					<Start />
-					<span>{widget.stars}</span>
+					<Star />
+					<span>{toPrefixedNumber(widget.stars)}</span>
 				</div>
 				<div className={styles.widget__stat}>
 					<Watchers />
-					<span>{widget.watchers}</span>
+					<span>{toPrefixedNumber(widget.watchers)}</span>
 				</div>
 				<div className={styles.widget__stat}>
 					<Forks />
-					<span>{widget.forks}</span>
+					<span>{toPrefixedNumber(widget.forks)}</span>
 				</div>
 				<div className={styles.widget__stat}>
 					<IssueOpened />
-					<span>{widget.issues}</span>
+					<span>{toPrefixedNumber(widget.issues)}</span>
 				</div>
 				<div className={styles.widget__stat}>
 					<PullRequests />
-					<span>{widget.pullRequests}</span>
+					<span>{toPrefixedNumber(widget.pullRequests)}</span>
 				</div>
 			</footer>
 		</article>

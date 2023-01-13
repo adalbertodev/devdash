@@ -1,10 +1,10 @@
+import { DomainEvents } from "../../../domain/DomainEvents";
+import { NotUrlValidError } from "../../../domain/errors";
 import {
-	DomainEvents,
-	NotUrlValidError,
 	RepositoryAlreadyExistsError,
 	RepositoryWidget,
 	RepositoryWidgetRepository,
-} from "../../../domain";
+} from "../../../domain/RepositoryWidget";
 
 interface AddRepositoryWidgetTools {
 	save: (
@@ -32,7 +32,7 @@ export const useAddRepositoryWidget = (
 		}
 
 		await repository.save(widget);
-		document.dispatchEvent(new CustomEvent(DomainEvents.repositoryWidgetAdded));
+		document.dispatchEvent(new CustomEvent(DomainEvents.repositoryWidgetsChanged));
 	};
 
 	return { save };

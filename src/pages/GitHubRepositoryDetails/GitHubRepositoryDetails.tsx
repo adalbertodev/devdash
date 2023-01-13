@@ -1,32 +1,56 @@
-import { FC, useEffect, useMemo } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 
-import { Lock, Unlock } from "../../assets/svgs";
+import closeImage from "../../assets/imgs/close.png";
 import {
-	DomainEvents,
-	GitHubRepositoryPullRequestRepository,
-	GitHubRepositoryRepository,
-} from "../../domain";
+	Check,
+	Error,
+	Forks,
+	IssueOpened,
+	Lock,
+	PullRequests,
+	Star,
+	Unlock,
+	Watchers,
+} from "../../assets/svgs";
+import { Modal } from "../../components/Modal";
+import { DomainEvents } from "../../domain";
+import { GitHubRepositoryRepository } from "../../domain/GitHubRepository";
+import { GitHubRepositoryPullRequestRepository } from "../../domain/GitHubRepositoryPullRequest";
+import { RepositoryWidgetRepository } from "../../domain/RepositoryWidget";
 import { useInViewport } from "../../hooks";
 import { GitHubRepositoryPullRequests } from "./components";
 import styles from "./GitHubRepositoryDetails.module.scss";
-import { useGitHubRepository } from "./hooks";
+import { useDeleteRepositoryWidget, useGitHubRepository } from "./hooks";
 
 interface Props {
 	gitHubRepositoryRepository: GitHubRepositoryRepository;
 	gitHubRepositoryPullRequestRepository: GitHubRepositoryPullRequestRepository;
+	repositoryWidgetRepository: RepositoryWidgetRepository;
 }
 
 export const GitHubRepositoryDetail: FC<Props> = ({
 	gitHubRepositoryRepository,
 	gitHubRepositoryPullRequestRepository,
+	repositoryWidgetRepository,
 }) => {
 	const { isInViewport, ref } = useInViewport();
+	const navigate = useNavigate();
 	const { organization, name } = useParams() as { organization: string; name: string };
+	const [isCheckDeleteModalOpen, setIsCheckDeleteModalOpen] = useState(false);
 
 	const repositoryId = useMemo(() => ({ organization, name }), [organization, name]);
 
 	const { repository, isLoading } = useGitHubRepository(gitHubRepositoryRepository, repositoryId);
+	const { deleteRepositoryWidget } = useDeleteRepositoryWidget(repositoryWidgetRepository);
+
+	const deleteRepository = useCallback(async () => {
+		await deleteRepositoryWidget(repositoryId);
+
+		document.dispatchEvent(new CustomEvent(DomainEvents.repositoryWidgetsChanged));
+
+		navigate("/");
+	}, [deleteRepositoryWidget, navigate, repositoryId]);
 
 	useEffect(() => {
 		if (!isLoading) {
@@ -45,87 +69,117 @@ export const GitHubRepositoryDetail: FC<Props> = ({
 	return (
 		<section className={styles["repository-detail"]}>
 			<header className={styles.header}>
-				<a href={repository.url} target="_blank" rel="noreferrer">
-					<h2 className={styles.header__title}>
-						{repository.id.organization}/{repository.id.name}
-					</h2>
-				</a>
-				{repository.private ? <Lock /> : <Unlock />}
+				<div className={styles.header__title}>
+					<a href={repository.url} target="_blank" rel="noreferrer">
+						<h2>
+							{repository.id.organization}/{repository.id.name}
+						</h2>
+					</a>
+					{repository.private ? <Lock /> : <Unlock />}
+				</div>
+
+				<button className={styles.deleteButton} onClick={() => setIsCheckDeleteModalOpen(true)}>
+					<img src={closeImage} alt="Delete Button" />
+				</button>
+
+				{isCheckDeleteModalOpen && (
+					<Modal setIsOpen={setIsCheckDeleteModalOpen} deleteAction={deleteRepository} />
+				)}
 			</header>
 
-			<p>{3 / 0}</p>
-			<p>{repository.description}</p>
+			<main>
+				<section>
+					<h3>Descripción</h3>
+					<p>{repository.description}</p>
+				</section>
 
-			<h3>Repository stats</h3>
-			<table className={styles.detail__table}>
-				<thead>
-					<tr>
-						<th>Stars</th>
-						<th>Watchers</th>
-						<th>Forks</th>
-						<th>Issues</th>
-						<th>Pull Requests</th>
-					</tr>
-				</thead>
+				<section>
+					<h3>Estadísticas del Repositorio</h3>
 
-				<tbody>
-					<tr>
-						<td>{repository.stars}</td>
-						<td>{repository.watchers}</td>
-						<td>{repository.forks}</td>
-						<td>{repository.issues}</td>
-						<td>{repository.pullRequests}</td>
-					</tr>
-				</tbody>
-			</table>
-
-			<h3>Workflow runs status</h3>
-
-			{repository.workflowRunsStatus.length > 0 ? (
-				<>
-					<p>
-						⏱️Last workflow run:{" "}
-						{repository.workflowRunsStatus[0].createdAt.toLocaleDateString("es-ES")}
-					</p>
 					<table className={styles.detail__table}>
 						<thead>
 							<tr>
-								<th>Name</th>
-								<th>Title</th>
-								<th>Date</th>
-								<th>Status</th>
-								<th>Conclusion</th>
+								<th>
+									<Star /> Stars
+								</th>
+								<th>
+									<Watchers /> Watchers
+								</th>
+								<th>
+									<Forks /> Forks
+								</th>
+								<th>
+									<IssueOpened /> Issues
+								</th>
+								<th>
+									<PullRequests /> Pull Requests
+								</th>
 							</tr>
 						</thead>
+
 						<tbody>
-							{repository.workflowRunsStatus.map((run) => (
-								<tr key={run.id}>
-									<td>{run.name}</td>
-									<td>
-										<a href={run.url} target="_blank" rel="noreferrer">
-											{run.title}
-										</a>
-									</td>
-									<td>{run.createdAt.toLocaleDateString("es-ES")}</td>
-									<td>{run.status}</td>
-									<td>{run.conclusion}</td>
-								</tr>
-							))}
+							<tr>
+								<td>{repository.stars}</td>
+								<td>{repository.watchers}</td>
+								<td>{repository.forks}</td>
+								<td>{repository.issues}</td>
+								<td>{repository.pullRequests}</td>
+							</tr>
 						</tbody>
 					</table>
-				</>
-			) : (
-				<p>There are no workflow runs</p>
-			)}
+				</section>
 
-			<section ref={ref}>
-				{isInViewport && (
-					<GitHubRepositoryPullRequests
-						repository={gitHubRepositoryPullRequestRepository}
-						repositoryId={repositoryId}
-					/>
-				)}
-			</section>
+				<section>
+					<h3>Estado de Workflow Runs</h3>
+
+					{repository.workflowRunsStatus.length > 0 ? (
+						<>
+							<p className={styles.middle}>
+								⏱️Última workflow run:{" "}
+								{repository.workflowRunsStatus[0].createdAt.toLocaleDateString("es-ES")}
+							</p>
+
+							<table className={styles.detail__table}>
+								<thead>
+									<tr>
+										<th>Nombre</th>
+										<th>Titulo</th>
+										<th>Fecha</th>
+										<th>Estado</th>
+										<th>Conclusión</th>
+									</tr>
+								</thead>
+								<tbody>
+									{repository.workflowRunsStatus.map((run) => (
+										<tr key={run.id}>
+											<td>{run.name}</td>
+											<td>
+												<a href={run.url} target="_blank" rel="noreferrer">
+													{run.title}
+												</a>
+											</td>
+											<td>{run.createdAt.toLocaleDateString("es-ES")}</td>
+											<td>{run.status === "completed" ? <Check /> : <Error />}</td>
+											<td>{run.conclusion === "sucess" ? <Check /> : <Error />}</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</>
+					) : (
+						<p>There are no workflow runs</p>
+					)}
+				</section>
+
+				<section ref={ref}>
+					{isInViewport && (
+						<GitHubRepositoryPullRequests
+							repository={gitHubRepositoryPullRequestRepository}
+							repositoryId={repositoryId}
+						/>
+					)}
+				</section>
+			</main>
 		</section>
 	);
 };

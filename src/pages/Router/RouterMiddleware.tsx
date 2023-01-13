@@ -1,11 +1,9 @@
 import { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { LocalStorageGitHubAccessTokenRepository } from "../../infrastructure";
-import { GitHubAccessTokenSearcher } from "../../infrastructure/GitHubAccessToken";
+import { LocalStorageGitHubAccessTokenRepository } from "../../infrastructure/GitHubAccessToken";
 
 const ghAccessTokenRepository = new LocalStorageGitHubAccessTokenRepository();
-const ghAccessTokenSearcher = new GitHubAccessTokenSearcher(ghAccessTokenRepository);
 
 interface Props {
 	children: React.ReactNode;
@@ -14,7 +12,7 @@ interface Props {
 export const RouterMiddleware: FC<Props> = ({ children }) => {
 	const navigate = useNavigate();
 
-	const ghAccessToken = ghAccessTokenSearcher.search();
+	const ghAccessToken = ghAccessTokenRepository.search();
 
 	useEffect(() => {
 		if (!ghAccessToken) {

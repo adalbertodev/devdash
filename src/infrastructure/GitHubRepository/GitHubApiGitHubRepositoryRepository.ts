@@ -10,7 +10,7 @@ export class GitHubApiGitHubRepositoryRepository implements GitHubRepositoryRepo
 
 	constructor(private readonly personalAccessToken: string) {}
 
-	async search(repositoryUrls: string[]): Promise<GitHubRepository[]> {
+	public search = async (repositoryUrls: string[]): Promise<GitHubRepository[]> => {
 		const responsePromises = await Promise.all(
 			repositoryUrls.map((url) => this.urlToId(url)).map((id) => this.searchById(id))
 		);
@@ -18,9 +18,9 @@ export class GitHubApiGitHubRepositoryRepository implements GitHubRepositoryRepo
 		return responsePromises.filter(
 			(responsePromise): responsePromise is GitHubRepository => responsePromise !== null
 		);
-	}
+	};
 
-	async searchById(repositoryId: RepositoryId): Promise<GitHubRepository | null> {
+	public searchById = async (repositoryId: RepositoryId): Promise<GitHubRepository | null> => {
 		const repositoryRequests = this.endpoints
 			.map((endpoint) => endpoint.replace("$organization", repositoryId.organization))
 			.map((endpoint) => endpoint.replace("$name", repositoryId.name))
@@ -69,14 +69,14 @@ export class GitHubApiGitHubRepositoryRepository implements GitHubRepositoryRepo
 					})),
 				};
 			});
-	}
+	};
 
-	private urlToId(url: string): RepositoryId {
+	private readonly urlToId = (url: string): RepositoryId => {
 		const splitUrl = url.split("/");
 
 		return {
 			name: splitUrl.pop() as string,
 			organization: splitUrl.pop() as string,
 		};
-	}
+	};
 }
