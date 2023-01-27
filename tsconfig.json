@@ -25,6 +25,7 @@
     "src",
     "tests",
     "jest.config.js",
-    "cypress.config.ts"
+    "cypress.config.ts",
+    ".eslintrc.js"
   ]
 }
