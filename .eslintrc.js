@@ -20,5 +20,9 @@ module.exports = {
 				"testing-library/prefer-screen-queries": 0,
 			},
 		},
+		{
+			files: ["tests/*.test.ts"],
+			extends: ["plugin:jest/recommended", "plugin:jest/styles", "plugin:jest-dom/recommended", "plugin:testing-library/dom"],
+		},
 	],
 };
