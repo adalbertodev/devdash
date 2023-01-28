@@ -16,28 +16,31 @@ export const GitHubRepositoryPullRequests: FC<Props> = ({ repository, repository
 
 	return (
 		<>
-			<h3>Pull Requests</h3>
-			<table className={styles.detail__table}>
-				<thead>
-					<tr>
-						<th>Título</th>
-						<th>Fecha</th>
-					</tr>
-				</thead>
-				<tbody>
-					{!isLoading &&
-						pullRequests.map((pullRequest) => (
-							<tr key={pullRequest.id}>
-								<td>
-									<a target="_blank" href={pullRequest.url} rel="noreferrer">
-										{pullRequest.title}
-									</a>
-								</td>
-								<td>{pullRequest.createdAt.toLocaleDateString("es-ES")}</td>
-							</tr>
-						))}
-				</tbody>
-			</table>
+			{!isLoading && pullRequests.length > 0 && (
+				<>
+				<h3>Pull Requests</h3>
+				<table className={styles.detail__table}>
+					<thead>
+						<tr>
+							<th>Título</th>
+							<th>Fecha</th>
+						</tr>
+					</thead>
+					<tbody>
+							{pullRequests.map((pullRequest) => (
+								<tr key={pullRequest.id}>
+									<td>
+										<a target="_blank" href={pullRequest.url} rel="noreferrer">
+											{pullRequest.title}
+										</a>
+									</td>
+									<td>{pullRequest.createdAt.toLocaleDateString("es-ES")}</td>
+								</tr>
+							))}
+					</tbody>
+				</table>
+				</>
+			)}
 
 			{isLoading && <Loader />}
 		</>

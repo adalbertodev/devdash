@@ -39,13 +39,13 @@ export const SettingsPage: FC<Props> = ({ repository }) => {
 				de los repositorios de Github.
 			</p>
 			<p>
-				Puedes obtener más info sobre cómo obtener el token{" "}
+				Puedes obtener más info sobre{" "}
 				<a
 					target="_blank"
 					href="https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token"
 					rel="noreferrer"
 				>
-					aquí
+					cómo obtener el token aquí
 				</a>
 			</p>
 
