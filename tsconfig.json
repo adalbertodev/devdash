@@ -26,6 +26,7 @@
     "tests",
     "jest.config.js",
     "cypress.config.ts",
-    ".eslintrc.js"
+    ".eslintrc.js",
+    "webpack.common.js"
   ]
 }
