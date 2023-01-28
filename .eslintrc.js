@@ -22,7 +22,11 @@ module.exports = {
 		},
 		{
 			files: ["tests/*.test.ts"],
-			extends: ["plugin:jest/recommended", "plugin:jest/styles", "plugin:jest-dom/recommended", "plugin:testing-library/dom"],
+			extends: [
+				"plugin:jest/recommended",
+				"plugin:jest-dom/recommended",
+				"plugin:testing-library/dom",
+			],
 		},
 	],
 };

@@ -18,15 +18,15 @@ export const GitHubRepositoryPullRequests: FC<Props> = ({ repository, repository
 		<>
 			{!isLoading && pullRequests.length > 0 && (
 				<>
-				<h3>Pull Requests</h3>
-				<table className={styles.detail__table}>
-					<thead>
-						<tr>
-							<th>Título</th>
-							<th>Fecha</th>
-						</tr>
-					</thead>
-					<tbody>
+					<h3>Pull Requests</h3>
+					<table className={styles.detail__table}>
+						<thead>
+							<tr>
+								<th>Título</th>
+								<th>Fecha</th>
+							</tr>
+						</thead>
+						<tbody>
 							{pullRequests.map((pullRequest) => (
 								<tr key={pullRequest.id}>
 									<td>
@@ -37,8 +37,8 @@ export const GitHubRepositoryPullRequests: FC<Props> = ({ repository, repository
 									<td>{pullRequest.createdAt.toLocaleDateString("es-ES")}</td>
 								</tr>
 							))}
-					</tbody>
-				</table>
+						</tbody>
+					</table>
 				</>
 			)}
 
